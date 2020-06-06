@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Buildsystem/Scenes/VIU-Android.unity
+    guid: 0d4f922331b9c59438060bca326b7163
+  - enabled: 1
+    path: Assets/Buildsystem/Scenes/GVR.unity
+    guid: 4239dac6980dab44aabbbb765a6ef686
+  - enabled: 1
+    path: Assets/Buildsystem/Scenes/VIU-Win.unity
+    guid: c781708af75f64c44ad14b932abdcec5
+  - enabled: 1
+    path: Assets/Buildsystem/Scenes/WinStandalone.unity
+    guid: d56500cc0667e5141bf3733c58ed6158
   m_configObjects: {}

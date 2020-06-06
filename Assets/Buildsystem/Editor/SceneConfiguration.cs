@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
+using UnityEngine;
+
 
 public enum OptionsTargetGroup
 {
@@ -17,56 +16,100 @@ public enum OptionsBuildTarget
     Android,
 }
 
+
 public class SceneConfiguration : EditorWindow
 {
+
     public OptionsBuildTarget bt;
     public OptionsTargetGroup btg;
     bool assignVIU = false;
     bool assignGvR = false;
     bool assignWaveSDK = false;
-    
+    private string buildTargetGroupName;
+    private string buildTargetName;
+    SceneConfManager SceneConfManager;
 
-    private List<Scene> allScenes = new List<Scene>();
+    private string sceneName;
 
-    [MenuItem("Buildsystem/Platform/Configuration")]
-    static void Init()
+    public void SetConfigManager(SceneConfManager sceneConfManager)
     {
-        SceneConfiguration window =
-            (SceneConfiguration)EditorWindow.GetWindow(typeof(SceneConfiguration), true,
-                "Scene Configuration");
-        window.Show();
+        this.SceneConfManager = sceneConfManager;
+    }
+
+    public void SetSceneName(string sceneName)
+    {
+        this.sceneName = sceneName;
     }
 
     void OnEnable()
     {
-        initSceneConfiguration();
+        
     }
+
     void OnGUI()
     {
         drawSceneConfiguration();
     }
 
-
     void drawSceneConfiguration()
     {
         GUILayout.BeginArea(new Rect(10, 10, 250, 250));
         GUILayout.Label("Scene Configuration");
+        GUILayout.Label("Configuration for " + sceneName + " :");
 
-        bt = (OptionsBuildTarget)EditorGUILayout.EnumPopup("BuildTarget :",bt);
+        bt = (OptionsBuildTarget)EditorGUILayout.EnumPopup("BuildTarget :", bt);
         btg = (OptionsTargetGroup)EditorGUILayout.EnumPopup("BuildTargetGroup :", btg);
         assignVIU = GUILayout.Toggle(assignVIU, "VIU");
         assignGvR = GUILayout.Toggle(assignGvR, "Google VR");
         assignWaveSDK = GUILayout.Toggle(assignWaveSDK, "Wave SDK");
+        if (GUILayout.Button("Save Config"))
+        {
+            getBuildTarget(bt);
+            getBuildTargetGroupOtion(btg);
+            SceneData sceneData = new SceneData();
+            sceneData.sceneName = sceneName;
+            sceneData.buildtarget = buildTargetName;
+            sceneData.buildtargetGroup = buildTargetGroupName;
+            sceneData.viu = assignVIU;
+            sceneData.gvr = assignGvR;
+            sceneData.wavevr = assignWaveSDK;
+            SceneConfManager.addSceneData(sceneData);
+            this.Close();
+            //SceneConfig.sceneConfigs = new SceneData[] { sceneData };
+            //Debug.Log("SceneConfigs saved: " + SceneConfig);
+            //string saveFile = JsonUtility.ToJson(sceneData, true);
+            //Debug.Log(JsonUtility.ToJson(SceneConfig, true));
+            //saveIntoJson(saveFile);
+        }
         GUILayout.EndArea();
     }
 
-    void initSceneConfiguration()
+    void getBuildTargetGroupOtion(OptionsTargetGroup btg)
     {
-        for (int i = 0; i < EditorSceneManager.sceneCount; i++)
+        switch (btg)
         {
-            allScenes.Add(EditorSceneManager.GetSceneAt(i));
-            Debug.Log(EditorSceneManager.GetSceneAt(i).name);
+            case OptionsTargetGroup.Android:
+                buildTargetGroupName = "Android";
+                break;
+            case OptionsTargetGroup.Standalone:
+                buildTargetGroupName = "Standalone";
+                break;
+
         }
     }
 
+    void getBuildTarget(OptionsBuildTarget bt)
+    {
+        switch (bt)
+        {
+            case OptionsBuildTarget.Android:
+                buildTargetName = "Android";
+                break;
+            case OptionsBuildTarget.StandaloneWindows64:
+                buildTargetName = "StandaloneWindows64";
+                break;
+        }
+    }
 }
+    
+

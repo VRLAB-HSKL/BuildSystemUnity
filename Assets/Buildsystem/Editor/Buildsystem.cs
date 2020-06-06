@@ -1,11 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
+
+[System.Serializable]
 public class Buildsystem : MonoBehaviour
 {
+    public static SceneConfManager sceneConfManager = new SceneConfManager();
+
     [MenuItem("Buildsystem/Platform/Standalone - Win64")]
     private static void LoadStandaloneWin64Build()
     {
@@ -45,5 +47,25 @@ public class Buildsystem : MonoBehaviour
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
         EditorSceneManager.OpenScene("Assets/Buildsystem/Scenes/GVR.unity");
         AssetDatabase.ImportPackage("Assets/Resources/GoogleVRForUnity_1.200.1.unitypackage", false);
+    }
+
+    [MenuItem("Buildsystem/Platform/Configuration")]
+    static void ShowSceneConfigurationManger()
+    {
+        SceneConfigurationManager window =
+            (SceneConfigurationManager)EditorWindow.GetWindow(typeof(SceneConfigurationManager), true,
+                "Scene Manager");
+        window.setSceneConfManager(sceneConfManager);
+        window.Show();
+    }
+
+    [MenuItem("Buildsystem/Platform/SwitchScene")]
+    static void SwitchPlatformAndScene()
+    {
+        SwtichSceneWindow swtichSceneWindow =
+            (SwtichSceneWindow)EditorWindow.GetWindow(typeof(SwtichSceneWindow), true,
+            "Switch between Scenes");
+        swtichSceneWindow.setSceneConfManager(sceneConfManager);
+        swtichSceneWindow.Show();
     }
 }
