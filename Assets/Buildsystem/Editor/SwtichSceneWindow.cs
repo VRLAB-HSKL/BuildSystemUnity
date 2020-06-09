@@ -4,27 +4,49 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+/// <summary>
+/// This class is used to display the loaded configurations and to switch between the current scenes 
+/// </summary>
 public class SwtichSceneWindow : EditorWindow
 {
+    //the SceneConfManager
     SceneConfManager sceneConfManager;
+    
+    //popup field index
     int index = 0;
+    
+    //provides the loaded scene names
     public string[] sceneDatas;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="confManager">the SceneConfManager</param>
     public void setSceneConfManager(SceneConfManager confManager)
     {
         this.sceneConfManager = confManager;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void OnEnable()
     {
         
     }
 
+    /// <summary>
+    /// opend the switch scene window
+    /// </summary>
     private void OnGUI()
     {
         drawSceneSwitchWindow();
     }
 
+    /// <summary>
+    /// This method shows the existing scenes within a popup window.
+    /// The button confirms the selection and applies the associated settings
+    /// </summary>
     void drawSceneSwitchWindow()
     {
         sceneDatas = sceneConfManager.getSceneDataLoadAsArray();
@@ -41,6 +63,10 @@ public class SwtichSceneWindow : EditorWindow
         }
     }
 
+    /// <summary>
+    /// this method loads the scene and its settings selected by the user
+    /// </summary>
+    /// <param name="i"> index  from popup field</param>
     void switchActiveSceneAndPlatform(int i)
     {
         string sceneName = sceneDatas[i];
@@ -52,6 +78,10 @@ public class SwtichSceneWindow : EditorWindow
         prepareAssets(sceneData.viu, sceneData.gvr, sceneData.wavevr);
     }
 
+    /// <summary>
+    /// This Method opend the selected scene
+    /// </summary>
+    /// <param name="name"> scene name</param>
     void prepareScene(string name)
     {
         string path = EditorSceneManager.GetSceneByName(name).path;
@@ -59,6 +89,12 @@ public class SwtichSceneWindow : EditorWindow
         
     }
 
+    /// <summary>
+    /// This method loads the selected assets and deletes the assets that are not currently required
+    /// </summary>
+    /// <param name="viu">viu asset</param>
+    /// <param name="gvr">gvr asset</param>
+    /// <param name="wave">wave asset</param>
     void prepareAssets(bool viu, bool gvr, bool wave)
     {
         if(viu)
@@ -93,6 +129,11 @@ public class SwtichSceneWindow : EditorWindow
         
     }
 
+    /// <summary>
+    /// this method changes the build target based on the scene selected by the user
+    /// </summary>
+    /// <param name="buildTarget">unity buildtarget</param>
+    /// <param name="buildTargetGroup">unity buildtargetgroup</param>
     void prepareBuildTarget(string buildTarget, string buildTargetGroup)
     {
         if(buildTarget == "Android" && buildTargetGroup == "Android")

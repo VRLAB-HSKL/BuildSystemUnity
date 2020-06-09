@@ -7,21 +7,33 @@ using System.Xml.Serialization;
 using System.IO;
 
 
-
+/// <summary>
+/// This class manages the loading and writing of configuration files and has specific getter methods
+/// </summary>
 public class SceneConfManager 
 {
-
+    //contains all scenes and their configurations
     private List<SceneData> sceneDatas;
 
+    //contains the scene data to save
     public SceneConfig sceneConfig;
+    
+    //contains the loaded scene data from configuration file
     public SceneConfig loadConfig;
 
+    /// <summary>
+    /// constructor
+    /// </summary>
     public SceneConfManager()
     {
         sceneDatas = new List<SceneData>();
         sceneConfig = new SceneConfig();
     }
 
+    /// <summary>
+    /// This method manages the user input and manages the scenes and the associated settings
+    /// </summary>
+    /// <param name="sceneData"> List of scene configurations</param>
     public void addSceneData(SceneData sceneData)
     {
         bool exists = false;
@@ -44,6 +56,9 @@ public class SceneConfManager
         
     }
 
+    /// <summary>
+    /// This Method save the scene configurations in a xml file
+    /// </summary>
     public void saveData()
     { 
         sceneConfig.sceneConfigs = sceneDatas;
@@ -57,6 +72,9 @@ public class SceneConfManager
         Debug.Log("Stream save Closed");
     } 
 
+    /// <summary>
+    /// this method loads the scene configuration file
+    /// </summary>
     public void loadData()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(SceneConfig));
@@ -70,9 +88,10 @@ public class SceneConfManager
         Debug.Log("Stream load Closed");
     }
 
-
-
-
+    /// <summary>
+    /// this method returns all scene names from the actual scene configuration list
+    /// </summary>
+    /// <returns>string[]</returns>
     public string[] getSceneDataNameArray()
     {
         List<string> sceneDataNames = new List<string>();
@@ -85,6 +104,10 @@ public class SceneConfManager
         return sceneDataNames.ToArray();
     }
 
+    /// <summary>
+    /// this method return all scene names from the loaded scene configuration file
+    /// </summary>
+    /// <returns></returns>
     public string[] getSceneDataLoadAsArray()
     {
         loadData();
@@ -99,6 +122,11 @@ public class SceneConfManager
         return sceneDataNames.ToArray();
     }
 
+    /// <summary>
+    /// this method provides the setting of the scene based on the given name
+    /// </summary>
+    /// <param name="sceneName">scene name</param>
+    /// <returns>the configuration to a scene</returns>
     public SceneData getSceneDataConfiguration(string sceneName)
     {
         SceneData sceneDataToSend = new SceneData();
@@ -113,6 +141,9 @@ public class SceneConfManager
         return sceneDataToSend;
     }
 
+    /// <summary>
+    /// print method for debug
+    /// </summary>
     public void showSceneDataCount()
     {
         Debug.Log("saved scene configurations: "+sceneDatas.Count);

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class contains the data structure of the XML representation
+/// </summary>
 [Serializable]
 public class SceneData
 {

@@ -3,11 +3,19 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 
 
-[System.Serializable]
+/// <summary>
+/// The Buildsystem Editor Menu
+/// </summary>
 public class Buildsystem : MonoBehaviour
 {
+    /// <summary>
+    /// <see cref="SceneConfManager"/>SceneConfManager
+    /// </summary>
     public static SceneConfManager sceneConfManager = new SceneConfManager();
 
+    /// <summary>
+    /// old switch platform => deleted later
+    /// </summary>
     [MenuItem("Buildsystem/Platform/Standalone - Win64")]
     private static void LoadStandaloneWin64Build()
     {
@@ -17,6 +25,9 @@ public class Buildsystem : MonoBehaviour
         EditorSceneManager.OpenScene("Assets/Buildsystem/Scenes/WinStandalone.unity");
     }
 
+    /// <summary>
+    /// old switch platform => deleted later
+    /// </summary>
     [MenuItem("Buildsystem/Platform/LoadVIU - VivePro-Win64")]
     private static void LoadViuViveProWin64Build()
     {
@@ -28,6 +39,9 @@ public class Buildsystem : MonoBehaviour
         AssetDatabase.ImportPackage("Assets/Resources/ViveInputUtility_v1.10.7.unitypackage", false);
     }
 
+    /// <summary>
+    /// old switch platform => deleted later
+    /// </summary>
     [MenuItem("Buildsystem/Platform/LoadVIU - ViveFocusPro - Android")]
     private static void LoadViveFocusProAndroidBuild()
     {
@@ -39,6 +53,9 @@ public class Buildsystem : MonoBehaviour
         AssetDatabase.ImportPackage("Assets/Resources/ViveInputUtility_v1.10.7.unitypackage", false);
     }
 
+    /// <summary>
+    /// old switch platform => deleted later
+    /// </summary>
     [MenuItem("Buildsystem/Platform/LoadGVR - Cardboard - Android")]
     private static void LoadGvrCardboardAndroidBuild()
     {
@@ -49,6 +66,9 @@ public class Buildsystem : MonoBehaviour
         AssetDatabase.ImportPackage("Assets/Resources/GoogleVRForUnity_1.200.1.unitypackage", false);
     }
 
+    /// <summary>
+    /// provides the configuration menu
+    /// </summary>
     [MenuItem("Buildsystem/Platform/Configuration")]
     static void ShowSceneConfigurationManger()
     {
@@ -59,6 +79,9 @@ public class Buildsystem : MonoBehaviour
         window.Show();
     }
 
+    /// <summary>
+    /// Provides the switch scene Menu
+    /// </summary>
     [MenuItem("Buildsystem/Platform/SwitchScene")]
     static void SwitchPlatformAndScene()
     {

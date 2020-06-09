@@ -22,16 +22,16 @@
       <viu>false</viu>
       <gvr>true</gvr>
       <wavevr>false</wavevr>
-      <buildtargetGroup>Android</buildtargetGroup>
-      <buildtarget>Android</buildtarget>
+      <buildtargetGroup>Standalone</buildtargetGroup>
+      <buildtarget>StandaloneWindows64</buildtarget>
     </SceneData>
     <SceneData>
       <sceneName>VIU-Android</sceneName>
-      <viu>false</viu>
+      <viu>true</viu>
       <gvr>false</gvr>
-      <wavevr>true</wavevr>
-      <buildtargetGroup>Android</buildtargetGroup>
-      <buildtarget>Android</buildtarget>
+      <wavevr>false</wavevr>
+      <buildtargetGroup>Standalone</buildtargetGroup>
+      <buildtarget>StandaloneWindows64</buildtarget>
     </SceneData>
   </SceneConfiguration>
 </SceneConfig>
