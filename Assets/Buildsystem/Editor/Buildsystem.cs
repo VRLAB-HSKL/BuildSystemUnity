@@ -91,4 +91,13 @@ public class Buildsystem : MonoBehaviour
         swtichSceneWindow.setSceneConfManager(sceneConfManager);
         swtichSceneWindow.Show();
     }
+
+    /// <summary>
+    /// sync unity project with buildsystem server
+    /// </summary>
+    [MenuItem("Buildsystem/Sync")]
+    static void SyncWithServer()
+    {
+
+    }
 }
