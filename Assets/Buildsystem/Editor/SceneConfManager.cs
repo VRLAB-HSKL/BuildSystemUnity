@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-
+using UnityEditor;
 
 /// <summary>
 /// This class manages the loading and writing of configuration files and has specific getter methods
@@ -139,6 +139,27 @@ public class SceneConfManager
             }
         }
         return sceneDataToSend;
+    }
+
+    /// <summary>
+    /// this method loads the build target from the existing project configuration
+    /// </summary>
+    /// <returns></returns>
+    public String[] getAllBuildTargets()
+    {
+        loadData();
+        sceneDatas = loadConfig.sceneConfigs;
+        List<String> foundBuildTargets = new List<string>();
+
+        foreach (SceneData sceneData in sceneDatas)
+        {
+            if(!foundBuildTargets.Contains(sceneData.buildtarget))
+            {
+                foundBuildTargets.Add(sceneData.buildtarget);
+            }
+        }
+
+        return foundBuildTargets.ToArray();
     }
 
     /// <summary>

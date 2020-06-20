@@ -95,9 +95,13 @@ public class Buildsystem : MonoBehaviour
     /// <summary>
     /// sync unity project with buildsystem server
     /// </summary>
-    [MenuItem("Buildsystem/Sync")]
+    [MenuItem("Buildsystem/Sync Buildsystem")]
     static void SyncWithServer()
     {
-
+        SyncServerWindow syncServerWindow =
+            (SyncServerWindow)EditorWindow.GetWindow(typeof(SyncServerWindow),
+            true, "Sync with Buildsystem");
+        syncServerWindow.SetConfigManager(sceneConfManager);
+        syncServerWindow.Show();
     }
 }

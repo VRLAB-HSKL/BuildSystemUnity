@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 /// <summary>
 /// This class provides the configurations window and allows all users to edit and save his scene settings
@@ -87,7 +91,7 @@ public class SceneConfigurationManager : EditorWindow
     /// </summary>
     public void initSceneConfiguration()
     {
-       
+
         //for (int i = 0; i < SceneManager.sceneCount; i++)
         //{
         //allScenes.Add(SceneManager.GetSceneAt(i));
