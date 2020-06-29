@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-
+using UnityEditor.PackageManager.UI;
 
 /// <summary>
 /// The Buildsystem Editor Menu
@@ -12,6 +12,11 @@ public class Buildsystem : MonoBehaviour
     /// <see cref="SceneConfManager"/>SceneConfManager
     /// </summary>
     public static SceneConfManager sceneConfManager = new SceneConfManager();
+
+    /// <summary>
+    /// <see cref="PlatformDataManager"/>SceneConfManager
+    /// </summary>
+    public static PlatformDataManager platformDataManager = new PlatformDataManager();
 
     /// <summary>
     /// old switch platform => deleted later
@@ -77,6 +82,19 @@ public class Buildsystem : MonoBehaviour
                 "Scene Manager");
         window.setSceneConfManager(sceneConfManager);
         window.Show();
+    }
+
+    /// <summary>
+    /// shows new platform configuration
+    /// </summary>
+    [MenuItem("Buildsystem/Platform/Platform Configuration")]
+    static void ShowPlatformConfigurationManager()
+    {
+        PlatformConfigurationManager platformConfigurationManager =
+            (PlatformConfigurationManager)EditorWindow.GetWindow(typeof(PlatformConfigurationManager), true,
+            "Platform Manager");
+        platformConfigurationManager.setPlatformDataMangager(platformDataManager);
+        platformConfigurationManager.Show();
     }
 
     /// <summary>

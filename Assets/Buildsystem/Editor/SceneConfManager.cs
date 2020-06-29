@@ -15,6 +15,9 @@ public class SceneConfManager
     //contains all scenes and their configurations
     private List<SceneData> sceneDatas;
 
+    //contains all platform configurations
+    private List<PlatformData> platformDatas;
+
     //contains the scene data to save
     public SceneConfig sceneConfig;
     
