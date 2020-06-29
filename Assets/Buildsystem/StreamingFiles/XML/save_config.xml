@@ -2,32 +2,8 @@
 <SceneConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SceneConfiguration>
     <SceneData>
-      <sceneName>VIU-Android</sceneName>
-      <viu>true</viu>
-      <gvr>false</gvr>
-      <wavevr>false</wavevr>
-      <buildtargetGroup>Android</buildtargetGroup>
-      <buildtarget>Android</buildtarget>
-    </SceneData>
-    <SceneData>
-      <sceneName>GVR</sceneName>
-      <viu>false</viu>
-      <gvr>true</gvr>
-      <wavevr>false</wavevr>
-      <buildtargetGroup>Android</buildtargetGroup>
-      <buildtarget>Android</buildtarget>
-    </SceneData>
-    <SceneData>
       <sceneName>VIU-Win</sceneName>
       <viu>true</viu>
-      <gvr>false</gvr>
-      <wavevr>false</wavevr>
-      <buildtargetGroup>Standalone</buildtargetGroup>
-      <buildtarget>StandaloneWindows64</buildtarget>
-    </SceneData>
-    <SceneData>
-      <sceneName>WinStandalone</sceneName>
-      <viu>false</viu>
       <gvr>false</gvr>
       <wavevr>false</wavevr>
       <buildtargetGroup>Standalone</buildtargetGroup>

@@ -9,6 +9,10 @@ public class PlatformData
 
     public string sceneName;
 
+    public string projectName;
+
+    public string description;
+
     public bool viu;
 
     public bool gvr;

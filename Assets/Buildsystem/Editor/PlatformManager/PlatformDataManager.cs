@@ -46,6 +46,35 @@ public class PlatformDataManager
         if(!platformDatas.Contains(platformData)) platformDatas.Add(platformData);
     }
 
+    public PlatformData[] getPlatformDataAsArray()
+    {
+        return this.platformDatas.ToArray();
+    }
+
+    public PlatformData getPlatformDataFromIndex(int index)
+    {
+        Debug.Log("Index: " + index);
+        Debug.Log("Count-Datas: " + platformDatas.Count);
+        PlatformData[] platformDataArray = this.platformDatas.ToArray();
+        return platformDataArray[index];
+    }
+
+    public void updatePlatformDataByIndex(int index, PlatformData data)
+    {
+        PlatformData[] platformDataArray = this.platformDatas.ToArray();
+        platformDataArray[index] = data;
+        Debug.Log("Edit Done");
+        
+    }
+
+    public void updatePlatformDataByData(string configName, PlatformData editData)
+    {
+       PlatformData datatosave;
+       datatosave = platformDatas.Find(data => data.configurationName == configName);
+       platformDatas.Remove(datatosave);
+       platformDatas.Add(editData);
+    }
+
 
     public string[] getScenesPath()
     {
