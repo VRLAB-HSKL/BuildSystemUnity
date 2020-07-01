@@ -69,6 +69,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(110, 45, 50, 50 - 26), "Save"))
         {
+            PlatformDataManager.saveData();
             this.Close();
         }
 
@@ -77,7 +78,12 @@ public class PlatformConfigurationManager : EditorWindow
             PrepareLoadConfigurationSetup(this.index);
         }
 
-        if(GUI.Button(new Rect(0, 150, 50, 50 - 26), "Close"))
+        if (GUI.Button(new Rect(0, 120, 80, 50 - 26), "Load Config"))
+        {
+            PlatformDataManager.loadData();
+        }
+
+        if (GUI.Button(new Rect(0, 150, 50, 50 - 26), "Close"))
         {
             this.Close();
         }
