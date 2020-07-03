@@ -141,14 +141,21 @@ public class PlatformDataManager
     public void loadData()
     {
         XmlSerializer serializer = new XmlSerializer(typeof(PlatformDataList));
-        using (FileStream stream = new FileStream(Application.dataPath +
-            "/Buildsystem/StreamingFiles/XML/save_platformConfig.xml", FileMode.Open))
+        string path = Application.dataPath + "/Buildsystem/StreamingFiles/XML/save_platformConfig.xml";
+        if(File.Exists(path)) {
+            Debug.Log("File exists and ready to load");
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+
+                PlatformDataList = serializer.Deserialize(stream) as PlatformDataList;
+                stream.Close();
+            }
+            Debug.Log("Stream load Closed");
+        } else
         {
-           
-            PlatformDataList = serializer.Deserialize(stream) as PlatformDataList;
-            stream.Close();
+            Debug.Log("No platform config found");
         }
-        Debug.Log("Stream load Closed");
+        
     }
 
 }

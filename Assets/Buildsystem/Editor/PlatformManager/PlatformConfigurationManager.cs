@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using System.Configuration;
+using System;
 
 public class PlatformConfigurationManager : EditorWindow
 {
@@ -16,6 +17,8 @@ public class PlatformConfigurationManager : EditorWindow
     private string[] platFormConfigs;
 
     private PlatformDataManager PlatformDataManager;
+
+    private bool loadPlatformConfigurationData = true;
 
     internal void setPlatformDataMangager(PlatformDataManager platformDataManager)
     {
@@ -36,16 +39,29 @@ public class PlatformConfigurationManager : EditorWindow
     {
         ShowPlatformConfigurationManager();
         this.platFormConfigs = PlatformDataManager.getAllConfigurationNamesAsArray();
+        loadPlatformConfigurationXML();
+    }
+
+    void loadPlatformConfigurationXML()
+    {
+        if(loadPlatformConfigurationData)
+        {
+            Debug.Log("File loaded once");
+            PlatformDataManager.loadData();
+            this.loadPlatformConfigurationData = false;
+        }
     }
 
 
     void ShowPlatformConfigurationManager()
     {
-        
-        GUILayout.BeginArea(new Rect(0, 0, 250, 250));
-        GUILayout.Label("Platform Configuration:");
-        index = EditorGUI.Popup(new Rect(0, 20, 250, 250), "Configurations:", index, platFormConfigs);
 
+        GUILayout.BeginArea(new Rect(0, 0, 250, 250));
+        //GUILayout.Label("Platform Configuration:");
+        GUI.Box(new Rect(0, 0, 250, 250), "Platform Configuration");
+        
+        index = EditorGUI.Popup(new Rect(0, 20, 250, 250), "Configurations:", index, platFormConfigs);
+        
         if (GUI.Button(new Rect(0, 45, 50, 50 - 26), "Create"))
         {
             CreateConfiguration createConfigurationWindow =
@@ -78,15 +94,16 @@ public class PlatformConfigurationManager : EditorWindow
             PrepareLoadConfigurationSetup(this.index);
         }
 
-        if (GUI.Button(new Rect(0, 120, 80, 50 - 26), "Load Config"))
-        {
-            PlatformDataManager.loadData();
-        }
+        //if (GUI.Button(new Rect(0, 120, 80, 50 - 26), "Load Config"))
+        //{
+        //    PlatformDataManager.loadData();
+        //}
 
         if (GUI.Button(new Rect(0, 150, 50, 50 - 26), "Close"))
         {
             this.Close();
         }
+       
         GUILayout.EndArea();
     }
 
