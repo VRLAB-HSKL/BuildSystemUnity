@@ -79,7 +79,7 @@ public class PlatformConfigurationManager : EditorWindow
             "Edit Configuration");
             editConfigurationWindow.SetDataManager(this.PlatformDataManager);
             //editConfigurationWindow.SetPlatformDataToEdit(this.PlatformDataManager.getPlatformDataFromIndex(this.index));
-            editConfigurationWindow.SetIndex(this.index);
+            editConfigurationWindow.SetIndex(index);
             editConfigurationWindow.Show();
         }
 
@@ -91,13 +91,13 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(0, 90, 50, 50-26), "Load"))
         {
-            PrepareLoadConfigurationSetup(this.index);
+            PrepareLoadConfigurationSetup(index);
         }
 
-        //if (GUI.Button(new Rect(0, 120, 80, 50 - 26), "Load Config"))
-        //{
-        //    PlatformDataManager.loadData();
-        //}
+        if (GUI.Button(new Rect(0, 120, 110, 50-26), "Delete Selected"))
+        {
+            DeleteSelectedPlatformConfiguration(index);
+        }
 
         if (GUI.Button(new Rect(0, 150, 50, 50 - 26), "Close"))
         {
@@ -115,6 +115,14 @@ public class PlatformConfigurationManager : EditorWindow
         prepareBuildSettings(dataToLoad.buildtarget, dataToLoad.buildtargetGroup);
         this.Close();
 
+    }
+
+    void DeleteSelectedPlatformConfiguration(int index)
+    {
+        PlatformData dataToDelete = new PlatformData();
+        dataToDelete = PlatformDataManager.getPlatformDataFromIndex(index);
+        Debug.Log("i: " + index + " => " + "File: " + dataToDelete.configurationName);
+        PlatformDataManager.DeleteSelectedPlatformDataByData(dataToDelete);
     }
 
     /// <summary>

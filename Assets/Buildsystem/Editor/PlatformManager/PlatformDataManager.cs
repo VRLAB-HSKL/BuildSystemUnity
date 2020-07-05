@@ -102,6 +102,14 @@ public class PlatformDataManager
         PlatformDataList.platformDatas.Add(editData);
     }
 
+    public void DeleteSelectedPlatformDataByData(PlatformData toDelete)
+    {
+        PlatformData dataTodelete;
+        dataTodelete = PlatformDataList.platformDatas.Find(data => data.configurationName == toDelete.configurationName);
+        PlatformDataList.platformDatas.Remove(dataTodelete);
+        Debug.Log("Delete data Success");
+    }
+
 
     public string[] getScenesPath()
     {
