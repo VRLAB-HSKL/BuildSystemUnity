@@ -10,31 +10,49 @@ using System;
 public class PlatformConfigurationManager : EditorWindow
 {
 
+    //
     private int index;
 
+    //
     private List<PlatformData> platformDatas;
 
+    //
     private string[] platFormConfigs;
 
+    //
     private PlatformDataManager PlatformDataManager;
 
+    //
     private bool loadPlatformConfigurationData = true;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="platformDataManager"></param>
     internal void setPlatformDataMangager(PlatformDataManager platformDataManager)
     {
         this.PlatformDataManager = platformDataManager;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void init()
     {
         this.platFormConfigs = new string[100];
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void OnEnable()
     {
         init();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void OnGUI()
     {
         ShowPlatformConfigurationManager();
@@ -42,6 +60,9 @@ public class PlatformConfigurationManager : EditorWindow
         loadPlatformConfigurationXML();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     void loadPlatformConfigurationXML()
     {
         if(loadPlatformConfigurationData)
@@ -52,17 +73,16 @@ public class PlatformConfigurationManager : EditorWindow
         }
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     void ShowPlatformConfigurationManager()
     {
+        GUI.Box(new Rect(0, 0, 260, 200), "Platform Configuration: ");
+        
+        index = EditorGUI.Popup(new Rect(0, 25, 255, 15), "Configurations:", index, platFormConfigs);
 
-        GUILayout.BeginArea(new Rect(0, 0, 250, 250));
-        //GUILayout.Label("Platform Configuration:");
-        GUI.Box(new Rect(0, 0, 250, 250), "Platform Configuration");
-        
-        index = EditorGUI.Popup(new Rect(0, 20, 250, 250), "Configurations:", index, platFormConfigs);
-        
-        if (GUI.Button(new Rect(0, 45, 50, 50 - 26), "Create"))
+        if (GUI.Button(new Rect(0, 65, 55, 24), "Create"))
         {
             CreateConfiguration createConfigurationWindow =
             (CreateConfiguration)EditorWindow.GetWindow(typeof(CreateConfiguration), true,
@@ -71,9 +91,8 @@ public class PlatformConfigurationManager : EditorWindow
             createConfigurationWindow.Show();
         }
 
-        if (GUI.Button(new Rect(55, 45, 50, 50 - 26), "Edit"))
+        if (GUI.Button(new Rect(60,65,55,24), "Edit"))
         {
-
             EditPlatformDataWindow editConfigurationWindow =
             (EditPlatformDataWindow)EditorWindow.GetWindow(typeof(EditPlatformDataWindow), true,
             "Edit Configuration");
@@ -83,28 +102,50 @@ public class PlatformConfigurationManager : EditorWindow
             editConfigurationWindow.Show();
         }
 
-        if (GUI.Button(new Rect(110, 45, 50, 50 - 26), "Save"))
+        if (GUI.Button(new Rect(0, 95, 55, 24), "Save"))
         {
             PlatformDataManager.saveData();
             this.Close();
         }
 
-        if (GUI.Button(new Rect(0, 90, 50, 50-26), "Load"))
-        {
-            PrepareLoadConfigurationSetup(index);
-        }
-
-        if (GUI.Button(new Rect(0, 120, 110, 50-26), "Delete Selected"))
+        if (GUI.Button(new Rect(60, 95, 55, 24), "Delete"))
         {
             DeleteSelectedPlatformConfiguration(index);
         }
 
-        if (GUI.Button(new Rect(0, 150, 50, 50 - 26), "Close"))
+        GUI.Box(new Rect(265, 0, 120, 200), "Load Configurations: ");
+
+        if (GUI.Button(new Rect(267, 65, 115, 24), "Open Selected"))
+        {
+            PrepareLoadConfigurationSetup(index);
+        }
+
+        if (GUI.Button(new Rect(267, 95, 115, 24), "Build Selected"))
+        {
+            
+        }
+
+        GUI.Box(new Rect(390, 0, 125, 200), "Buildsystem WebApp: ");
+
+        if (GUI.Button(new Rect(392, 40, 120, 24), "Load"))
+        {
+
+        }
+
+        if (GUI.Button(new Rect(392, 70, 120, 24), "Store"))
+        {
+
+        }
+
+        if (GUI.Button(new Rect(392, 100, 120, 24), "WebApp"))
+        {
+            Application.OpenURL("http://www.google.de");
+        }
+
+        if (GUI.Button(new Rect(0, 165, 117 , 24), "Close"))
         {
             this.Close();
         }
-       
-        GUILayout.EndArea();
     }
 
     void PrepareLoadConfigurationSetup(int index)

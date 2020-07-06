@@ -110,7 +110,10 @@ public class PlatformDataManager
         Debug.Log("Delete data Success");
     }
 
-
+    /// <summary>
+    /// returned all Scenes in Buildpath
+    /// </summary>
+    /// <returns></returns>
     public string[] getScenesPath()
     {
         return this.allScenesPath;
