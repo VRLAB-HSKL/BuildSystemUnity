@@ -78,11 +78,11 @@ public class PlatformConfigurationManager : EditorWindow
     /// </summary>
     void ShowPlatformConfigurationManager()
     {
-        GUI.Box(new Rect(0, 0, 260, 200), "Platform Configuration: ");
+        GUI.Box(new Rect(0, 0, 260, 140), "Platform Configuration: ");
         
         index = EditorGUI.Popup(new Rect(0, 25, 255, 15), "Configurations:", index, platFormConfigs);
 
-        if (GUI.Button(new Rect(0, 65, 55, 24), "Create"))
+        if (GUI.Button(new Rect(5, 65, 55, 24), "Create"))
         {
             CreateConfiguration createConfigurationWindow =
             (CreateConfiguration)EditorWindow.GetWindow(typeof(CreateConfiguration), true,
@@ -91,7 +91,7 @@ public class PlatformConfigurationManager : EditorWindow
             createConfigurationWindow.Show();
         }
 
-        if (GUI.Button(new Rect(60,65,55,24), "Edit"))
+        if (GUI.Button(new Rect(65,65,55,24), "Edit"))
         {
             EditPlatformDataWindow editConfigurationWindow =
             (EditPlatformDataWindow)EditorWindow.GetWindow(typeof(EditPlatformDataWindow), true,
@@ -102,13 +102,13 @@ public class PlatformConfigurationManager : EditorWindow
             editConfigurationWindow.Show();
         }
 
-        if (GUI.Button(new Rect(0, 95, 55, 24), "Save"))
+        if (GUI.Button(new Rect(5, 95, 55, 24), "Save"))
         {
             PlatformDataManager.saveData();
             this.Close();
         }
 
-        if (GUI.Button(new Rect(60, 95, 55, 24), "Delete"))
+        if (GUI.Button(new Rect(65, 95, 55, 24), "Delete"))
         {
             DeleteSelectedPlatformConfiguration(index);
         }
@@ -134,15 +134,16 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 70, 120, 24), "Store"))
         {
-
+            SendToBuildsystemServer();
         }
 
         if (GUI.Button(new Rect(392, 100, 120, 24), "WebApp"))
         {
-            Application.OpenURL("http://www.google.de");
+            Application.OpenURL("http://localhost:3000/");
         }
 
-        if (GUI.Button(new Rect(0, 165, 117 , 24), "Close"))
+        GUI.Box(new Rect(0, 145, 260, 55), "");
+        if (GUI.Button(new Rect(5, 165, 117 , 24), "Close"))
         {
             this.Close();
         }
@@ -196,6 +197,11 @@ public class PlatformConfigurationManager : EditorWindow
         }
     }
 
+
+    void SendToBuildsystemServer()
+    {
+
+    }
 
     /// <summary>
     /// This method loads the selected assets
