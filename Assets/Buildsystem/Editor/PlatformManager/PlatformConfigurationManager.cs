@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using System.Configuration;
 using System;
+using UnityEngine.Networking;
+using Unity.EditorCoroutines.Editor;
 
 public class PlatformConfigurationManager : EditorWindow
 {
@@ -78,6 +80,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// </summary>
     void ShowPlatformConfigurationManager()
     {
+       
         GUI.Box(new Rect(0, 0, 260, 140), "Platform Configuration: ");
         
         index = EditorGUI.Popup(new Rect(0, 25, 255, 15), "Configurations:", index, platFormConfigs);
@@ -93,6 +96,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(65,65,55,24), "Edit"))
         {
+            Debug.Log("Edit index:" + index);
             EditPlatformDataWindow editConfigurationWindow =
             (EditPlatformDataWindow)EditorWindow.GetWindow(typeof(EditPlatformDataWindow), true,
             "Edit Configuration");
@@ -117,6 +121,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(267, 65, 115, 24), "Open Selected"))
         {
+            Debug.Log("Load index:" + index);
             PrepareLoadConfigurationSetup(index);
         }
 
@@ -151,8 +156,10 @@ public class PlatformConfigurationManager : EditorWindow
 
     void PrepareLoadConfigurationSetup(int index)
     {
+
         PlatformData dataToLoad = new PlatformData();
         dataToLoad = PlatformDataManager.getPlatformDataFromIndex(index);
+        Debug.Log(dataToLoad.sceneName);
         LoadScene(dataToLoad.sceneName);
         prepareBuildSettings(dataToLoad.buildtarget, dataToLoad.buildtargetGroup);
         this.Close();
@@ -201,6 +208,12 @@ public class PlatformConfigurationManager : EditorWindow
     void SendToBuildsystemServer()
     {
 
+        PlatformData dataToSend = new PlatformData();
+        dataToSend = PlatformDataManager.getPlatformDataFromIndex(index);
+        String jsonString = JsonUtility.ToJson(dataToSend);
+        Debug.Log(jsonString);
+        EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
+        //PlatformDataManager.PlatformDataList
     }
 
     /// <summary>
@@ -213,5 +226,30 @@ public class PlatformConfigurationManager : EditorWindow
     {
         
 
+    }
+
+    /// <summary>
+    /// this method sends the project information to the webserver
+    /// </summary>
+    /// <param name="jsonString"></param>
+    /// <returns></returns>
+    IEnumerator Upload(String jsonString)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:8080/api/unity/platformconfigurationservice", jsonString))
+        {
+            www.method = UnityWebRequest.kHttpVerbPOST;
+            www.SetRequestHeader("Content-Type", "application/json");
+            www.SetRequestHeader("Accept", "application/json");
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+            }
+        }
     }
 }

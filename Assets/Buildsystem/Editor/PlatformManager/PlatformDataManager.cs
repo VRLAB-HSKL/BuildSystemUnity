@@ -81,25 +81,26 @@ public class PlatformDataManager
         return platformDataArray[index];
     }
 
-    public void updatePlatformDataByIndex(int index, PlatformData data)
+    public void updatePlatformData(PlatformData dataToEdit)
     {
-        //PlatformData[] platformDataArray = this.platformDatas.ToArray();
-        PlatformData[] platformDataArray = this.PlatformDataList.platformDatas.ToArray();
-        platformDataArray[index] = data;
+                
+        foreach (PlatformData data in PlatformDataList.platformDatas)
+        {
+            if (data.configurationName == dataToEdit.configurationName)
+            {
+                data.sceneName = dataToEdit.sceneName;
+                data.description = dataToEdit.description;
+                data.viu = dataToEdit.viu;
+                data.gvr = dataToEdit.gvr;
+                data.wavevr = dataToEdit.wavevr;
+                data.middleVR = dataToEdit.middleVR;
+                data.buildtargetGroup = dataToEdit.buildtargetGroup;
+                data.buildtarget = dataToEdit.buildtarget;
+            }
+        }
+
         Debug.Log("Edit Done");
-        
-    }
-
-    public void updatePlatformDataByData(string configName, PlatformData editData)
-    {
-       PlatformData datatosave;
-       //datatosave = platformDatas.Find(data => data.configurationName == configName);
-       //platformDatas.Remove(datatosave);
-       //platformDatas.Add(editData);
-
-        datatosave = PlatformDataList.platformDatas.Find(data => data.configurationName == configName);
-        PlatformDataList.platformDatas.Remove(datatosave);
-        PlatformDataList.platformDatas.Add(editData);
+     
     }
 
     public void DeleteSelectedPlatformDataByData(PlatformData toDelete)
@@ -138,12 +139,17 @@ public class PlatformDataManager
     {
         XmlSerializer serializer = new XmlSerializer(typeof(PlatformDataList));
         using (FileStream stream = new FileStream(Application.dataPath +
-            "/Buildsystem/StreamingFiles/XML/save_platformConfig.xml", FileMode.Create))
+            "/Buildsystem/StreamingFiles/XML/save_platformConfig.xml", FileMode.CreateNew))
         {
             serializer.Serialize(stream, PlatformDataList);
             stream.Close();
         }
         Debug.Log("Stream save Closed");
+    }
+
+    public PlatformDataList getPlatformDataList()
+    {
+        return this.PlatformDataList;
     }
 
     /// <summary>
