@@ -103,6 +103,10 @@ public class PlatformDataManager
      
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="toDelete"></param>
     public void DeleteSelectedPlatformDataByData(PlatformData toDelete)
     {
         PlatformData dataTodelete;
@@ -120,6 +124,9 @@ public class PlatformDataManager
         return this.allScenesPath;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void loadActiveScenes()
     {
         foreach (EditorBuildSettingsScene scene in EditorBuildSettings.scenes)

@@ -2,10 +2,11 @@
 <PlatformDataList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <PlatformConfiguration>
     <PlatformData>
-      <configurationName>test1</configurationName>
+      <configurationName>Test1</configurationName>
+      <index>2</index>
       <sceneName>VIU-Win</sceneName>
       <projectName>BuildSystemUnity</projectName>
-      <description>test1 test1 test1</description>
+      <description>Test1 test1 test1</description>
       <viu>true</viu>
       <gvr>false</gvr>
       <wavevr>false</wavevr>
@@ -14,28 +15,30 @@
       <buildtarget>StandaloneWindows64</buildtarget>
     </PlatformData>
     <PlatformData>
-      <configurationName>test2</configurationName>
-      <sceneName>GVR</sceneName>
-      <projectName>BuildSystemUnity</projectName>
-      <description>test2</description>
-      <viu>true</viu>
-      <gvr>true</gvr>
-      <wavevr>true</wavevr>
-      <middleVR>true</middleVR>
-      <buildtargetGroup>Android</buildtargetGroup>
-      <buildtarget>Android</buildtarget>
-    </PlatformData>
-    <PlatformData>
-      <configurationName>test3</configurationName>
+      <configurationName>Test2</configurationName>
+      <index>3</index>
       <sceneName>WinStandalone</sceneName>
       <projectName>BuildSystemUnity</projectName>
-      <description>test3</description>
+      <description>Test2</description>
       <viu>false</viu>
       <gvr>false</gvr>
       <wavevr>false</wavevr>
       <middleVR>false</middleVR>
       <buildtargetGroup>Standalone</buildtargetGroup>
       <buildtarget>StandaloneWindows64</buildtarget>
+    </PlatformData>
+    <PlatformData>
+      <configurationName>Test3</configurationName>
+      <index>0</index>
+      <sceneName>VIU-Android</sceneName>
+      <projectName>BuildSystemUnity</projectName>
+      <description>Test3</description>
+      <viu>true</viu>
+      <gvr>false</gvr>
+      <wavevr>true</wavevr>
+      <middleVR>false</middleVR>
+      <buildtargetGroup>Android</buildtargetGroup>
+      <buildtarget>Android</buildtarget>
     </PlatformData>
   </PlatformConfiguration>
 </PlatformDataList>

@@ -7,6 +7,8 @@ public class PlatformData
 {
     public string configurationName;
 
+    public int index;
+
     public string sceneName;
 
     public string projectName;

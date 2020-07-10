@@ -106,6 +106,7 @@ public class EditPlatformDataWindow : EditorWindow
             this.configName = platformData.configurationName;
             this.assignVIU = platformData.viu;
             this.assignGvR = platformData.gvr;
+            this.index = platformData.index;
             this.assignWaveSDK = platformData.wavevr;
             this.assignMiddleVR = platformData.middleVR;
 

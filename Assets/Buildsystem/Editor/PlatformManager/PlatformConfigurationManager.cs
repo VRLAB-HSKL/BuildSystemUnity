@@ -27,6 +27,8 @@ public class PlatformConfigurationManager : EditorWindow
     //
     private bool loadPlatformConfigurationData = true;
 
+    private Build build;
+
     /// <summary>
     /// 
     /// </summary>
@@ -41,6 +43,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// </summary>
     void init()
     {
+        this.build = new Build();
         this.platFormConfigs = new string[100];
     }
 
@@ -127,7 +130,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(267, 95, 115, 24), "Build Selected"))
         {
-            
+            build.BuildConfiguration();
         }
 
         GUI.Box(new Rect(390, 0, 125, 200), "Buildsystem WebApp: ");
@@ -139,10 +142,16 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 70, 120, 24), "Store"))
         {
-            SendToBuildsystemServer();
+            StoreToBuildsystemServer();
         }
 
-        if (GUI.Button(new Rect(392, 100, 120, 24), "WebApp"))
+        if (GUI.Button(new Rect(392, 100, 120, 24), "Store Selected"))
+        {
+            StoreSelectedToBuildsystemServer();
+        }
+
+
+        if (GUI.Button(new Rect(392, 130, 120, 24), "WebApp"))
         {
             Application.OpenURL("http://localhost:3000/");
         }
@@ -205,7 +214,7 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
 
-    void SendToBuildsystemServer()
+    void StoreSelectedToBuildsystemServer()
     {
 
         PlatformData dataToSend = new PlatformData();
@@ -214,6 +223,20 @@ public class PlatformConfigurationManager : EditorWindow
         Debug.Log(jsonString);
         EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
         //PlatformDataManager.PlatformDataList
+    }
+
+    void StoreToBuildsystemServer()
+    {
+        List<PlatformData> datalist = PlatformDataManager.PlatformDataList.platformDatas;
+
+        foreach(PlatformData data in datalist)
+        {
+            String jsonString = JsonUtility.ToJson(data);
+            Debug.Log(jsonString);
+            EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
+        }
+
+        
     }
 
     /// <summary>

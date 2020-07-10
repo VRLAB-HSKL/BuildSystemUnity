@@ -133,6 +133,7 @@ public class CreateConfiguration : EditorWindow
             platformData.gvr = assignGvR;
             platformData.wavevr = assignWaveSDK;
             platformData.middleVR = assignMiddleVR;
+            platformData.index = index;
             PlatformDataManager.addPlatformConfiguration(platformData);
             this.Close();
         }
