@@ -137,7 +137,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 40, 120, 24), "Load"))
         {
-
+            LoadFromBuildsystemServer();
         }
 
         if (GUI.Button(new Rect(392, 70, 120, 24), "Store"))
@@ -239,6 +239,11 @@ public class PlatformConfigurationManager : EditorWindow
         
     }
 
+    void LoadFromBuildsystemServer()
+    {
+        EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getallplatformconfigurationservice"), this);
+    }
+
     /// <summary>
     /// This method loads the selected assets
     /// </summary>
@@ -272,6 +277,28 @@ public class PlatformConfigurationManager : EditorWindow
             else
             {
                 Debug.Log("Form upload complete!");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    IEnumerator GetFromURL(String uri)
+    {
+       using (UnityWebRequest request = UnityWebRequest.Get(uri))
+        {
+            yield return request.SendWebRequest();
+
+            if(request.isNetworkError || request.isHttpError)
+            {
+                Debug.LogError("Request Error: " + request.error);
+            } else
+            {
+                string jsonString = request.downloadHandler.text;
+                Debug.Log(jsonString);
             }
         }
     }

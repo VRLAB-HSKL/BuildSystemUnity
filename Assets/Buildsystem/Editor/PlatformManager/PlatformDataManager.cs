@@ -71,6 +71,11 @@ public class PlatformDataManager
         return this.PlatformDataList.platformDatas.ToArray();
     }
 
+    /// <summary>
+    /// this method provides a specific configuration based on the passed parameter
+    /// </summary>
+    /// <param name="index"> index </param>
+    /// <returns> returns a configurations based on the passed parameter </returns>
     public PlatformData getPlatformDataFromIndex(int index)
     {
         Debug.Log("Index: " + index);
@@ -81,6 +86,10 @@ public class PlatformDataManager
         return platformDataArray[index];
     }
 
+    /// <summary>
+    /// This Method allows user to edit a specific configuration
+    /// </summary>
+    /// <param name="dataToEdit"></param>
     public void updatePlatformData(PlatformData dataToEdit)
     {
                 
