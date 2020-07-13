@@ -127,12 +127,12 @@ public class CreateConfiguration : EditorWindow
             platformData.sceneName = allScenesPath[index];
             getBuildTarget(bt);
             getBuildTargetGroupOption(btg);
-            platformData.buildtarget = buildTargetName;
-            platformData.buildtargetGroup = buildTargetGroupName;
+            platformData.buildTarget = buildTargetName;
+            platformData.buildTargetGroup = buildTargetGroupName;
             platformData.viu = assignVIU;
             platformData.gvr = assignGvR;
             platformData.wavevr = assignWaveSDK;
-            platformData.middleVR = assignMiddleVR;
+            platformData.middlevr = assignMiddleVR;
             platformData.index = index;
             PlatformDataManager.addPlatformConfiguration(platformData);
             this.Close();

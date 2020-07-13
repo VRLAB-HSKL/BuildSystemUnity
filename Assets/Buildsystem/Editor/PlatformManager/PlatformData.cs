@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Boo.Lang;
+using System;
 
 /// <summary>
 /// This class contains the data structure of the XML representation
 /// </summary>
+
+[Serializable]
 public class PlatformData 
 {
-    public string configurationName;
+    public long id;
 
-    public int index;
+    public string configurationName;
 
     public string sceneName;
 
@@ -21,9 +24,17 @@ public class PlatformData
 
     public bool wavevr;
 
-    public bool middleVR;
+    public bool middlevr;
 
-    public string buildtargetGroup;
+    public string buildTargetGroup;
 
-    public string buildtarget;
+    public string buildTarget;
+
+    public int index;
+}
+
+[Serializable]
+public class PlatformDataRoot
+{
+    public PlatformData[] platformDatas;
 }

@@ -29,6 +29,7 @@ public class PlatformConfigurationManager : EditorWindow
 
     private Build build;
 
+
     /// <summary>
     /// 
     /// </summary>
@@ -128,9 +129,12 @@ public class PlatformConfigurationManager : EditorWindow
             PrepareLoadConfigurationSetup(index);
         }
 
-        if (GUI.Button(new Rect(267, 95, 115, 24), "Build Selected"))
+        if (GUI.Button(new Rect(267, 95, 115, 24), "Build"))
         {
-            build.BuildConfiguration();
+            BuildWindow buildWindow =
+                (BuildWindow)EditorWindow.GetWindow(typeof(BuildWindow), true, "Build");
+            buildWindow.SetDataManager(PlatformDataManager);
+            buildWindow.Show();
         }
 
         GUI.Box(new Rect(390, 0, 125, 200), "Buildsystem WebApp: ");
@@ -170,7 +174,7 @@ public class PlatformConfigurationManager : EditorWindow
         dataToLoad = PlatformDataManager.getPlatformDataFromIndex(index);
         Debug.Log(dataToLoad.sceneName);
         LoadScene(dataToLoad.sceneName);
-        prepareBuildSettings(dataToLoad.buildtarget, dataToLoad.buildtargetGroup);
+        prepareBuildSettings(dataToLoad.buildTarget, dataToLoad.buildTargetGroup);
         this.Close();
 
     }
@@ -241,7 +245,8 @@ public class PlatformConfigurationManager : EditorWindow
 
     void LoadFromBuildsystemServer()
     {
-        EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getallplatformconfigurationservice"), this);
+        //EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getallplatformconfigurationservice"), this);
+        EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getplatformconfigurationbyid?id=1"), this);
     }
 
     /// <summary>
@@ -299,6 +304,10 @@ public class PlatformConfigurationManager : EditorWindow
             {
                 string jsonString = request.downloadHandler.text;
                 Debug.Log(jsonString);
+                PlatformData data = JsonUtility.FromJson<PlatformData>(jsonString);
+                Debug.Log(data.configurationName);
+
+                //PlatformDataRoot dataRoot = JsonUtility.FromJson<PlatformDataRoot>(jsonString);
             }
         }
     }

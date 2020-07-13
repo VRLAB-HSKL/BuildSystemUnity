@@ -102,9 +102,9 @@ public class PlatformDataManager
                 data.viu = dataToEdit.viu;
                 data.gvr = dataToEdit.gvr;
                 data.wavevr = dataToEdit.wavevr;
-                data.middleVR = dataToEdit.middleVR;
-                data.buildtargetGroup = dataToEdit.buildtargetGroup;
-                data.buildtarget = dataToEdit.buildtarget;
+                data.middlevr = dataToEdit.middlevr;
+                data.buildTargetGroup = dataToEdit.buildTargetGroup;
+                data.buildTarget = dataToEdit.buildTarget;
             }
         }
 

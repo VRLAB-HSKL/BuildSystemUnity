@@ -108,24 +108,24 @@ public class EditPlatformDataWindow : EditorWindow
             this.assignGvR = platformData.gvr;
             this.index = platformData.index;
             this.assignWaveSDK = platformData.wavevr;
-            this.assignMiddleVR = platformData.middleVR;
+            this.assignMiddleVR = platformData.middlevr;
 
-            if (platformData.buildtargetGroup == "Android")
+            if (platformData.buildTargetGroup == "Android")
             {
                 btg = OptionsTargetGroup.Android;
             }
 
-            if (platformData.buildtargetGroup == "Standalone")
+            if (platformData.buildTargetGroup == "Standalone")
             {
                 btg = OptionsTargetGroup.Standalone;
             }
 
-            if (platformData.buildtarget == "Android")
+            if (platformData.buildTarget == "Android")
             {
                 bt = OptionsBuildTarget.Android;
             }
 
-            if (platformData.buildtarget == "StandaloneWindows64")
+            if (platformData.buildTarget == "StandaloneWindows64")
             {
                 bt = OptionsBuildTarget.StandaloneWindows64;
             }
@@ -189,12 +189,12 @@ public class EditPlatformDataWindow : EditorWindow
             platformData.sceneName = allScenesPath[index];
             getBuildTarget(bt);
             getBuildTargetGroupOption(btg);
-            platformData.buildtarget = buildTargetName;
-            platformData.buildtargetGroup = buildTargetGroupName;
+            platformData.buildTarget = buildTargetName;
+            platformData.buildTargetGroup = buildTargetGroupName;
             platformData.viu = assignVIU;
             platformData.gvr = assignGvR;
             platformData.wavevr = assignWaveSDK;
-            platformData.middleVR = assignMiddleVR;
+            platformData.middlevr = assignMiddleVR;
             //PlatformDataManager.updatePlatformDataByIndex(storedIndex, platformData);
             //PlatformDataManager.updatePlatformDataByData(platformData.configurationName, platformData);
             PlatformDataManager.updatePlatformData(platformData);
