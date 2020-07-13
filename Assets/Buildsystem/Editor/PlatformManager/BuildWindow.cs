@@ -45,6 +45,9 @@ public class BuildWindow : EditorWindow
     //
     private string destinationFile;
 
+    //
+    private bool usbAndroid;
+
     /// <summary>
     /// <see cref="PlatformDataManager"/> SceneConfManager
     /// </summary>
@@ -85,7 +88,8 @@ public class BuildWindow : EditorWindow
         this.buildProcess = "";
         this.index = 0;
         this.folderPath = "";
-        this.appName = ""; 
+        this.appName = "";
+        this.usbAndroid = false;
     }
 
     /// <summary>
@@ -110,8 +114,9 @@ public class BuildWindow : EditorWindow
     /// </summary>
     void ShowBuildWindow()
     {
-        GUI.Box(new Rect(0, 0, 290, 200), "Build Configuration: ");
+        GUI.Box(new Rect(0, 0, 290, 170), "Build Configuration: ");
 
+        
         EditorGUI.LabelField( new Rect(0,0,160,80),"Choose Destination Folder:");
         if(GUI.Button(new Rect(160,30,120,20), "Search"))
         {
@@ -137,6 +142,11 @@ public class BuildWindow : EditorWindow
         getBuildTarget(bt);
         getBuildTargetGroupOption(btg);
         GUILayout.EndArea();
+        
+        GUI.Box(new Rect(0,180,290,55), "USB-Build for Android");
+        GUILayout.BeginArea(new Rect(5, 205, 250, 250));
+        usbAndroid = GUILayout.Toggle(usbAndroid, "USB Android");
+        GUILayout.EndArea();
 
         GUI.Box(new Rect(0, 245, 290, 30), "");
         if (GUI.Button(new Rect(5, 250, 120, 20), "Build"))
@@ -153,8 +163,17 @@ public class BuildWindow : EditorWindow
 
             if (buildProcess == "Android")
             {
+
                 this.destinationFile = folderPath + "/" + appName + ".apk";
-                startAndroidBuild(fullScenePath, destinationFile);
+
+                if (usbAndroid)
+                {
+                    startAndroidAutoBuild(fullScenePath, destinationFile);
+                } else {
+                    
+                    startAndroidBuild(fullScenePath, destinationFile);
+                }
+                
             }
         }
 
@@ -173,6 +192,17 @@ public class BuildWindow : EditorWindow
     {
         string[] scenesPath = new[] { fullScenePath };
         BuildPipeline.BuildPlayer(scenesPath, destinationFile, BuildTarget.Android, BuildOptions.None);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fullScenePath"></param>
+    /// <param name="destinationFile"></param>
+    void startAndroidAutoBuild(string fullScenePath, string destinationFile)
+    {
+        string[] scenesPath = new[] { fullScenePath };
+        BuildPipeline.BuildPlayer(scenesPath, destinationFile, BuildTarget.Android, BuildOptions.AutoRunPlayer);
     }
 
     /// <summary>
