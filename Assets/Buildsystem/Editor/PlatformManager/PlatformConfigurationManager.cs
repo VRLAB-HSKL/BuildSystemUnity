@@ -193,7 +193,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// <param name="name"> scene name</param>
     void LoadScene(string sceneName)
     {
-        EditorSceneManager.OpenScene("Assets/Buildsystem/Scenes/" + sceneName + ".unity");
+        EditorSceneManager.OpenScene("Assets/Scenes/" + sceneName + ".unity");
     }
 
 

@@ -84,7 +84,7 @@ public class BuildWindow : EditorWindow
     {
         this.destinationFile = "";
         this.sceneEnding = ".unity";
-        this.scenePath = "Assets/Buildsystem/Scenes/";
+        this.scenePath = "Assets/Scenes/";
         this.buildProcess = "";
         this.index = 0;
         this.folderPath = "";

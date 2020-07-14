@@ -9,7 +9,7 @@ public class Build
     public void BuildConfiguration()
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
-        buildPlayerOptions.scenes = new[] {"Assets/Buildsystem/Scenes/VIU-Win.unity"};
+        buildPlayerOptions.scenes = new[] {"Assets/Scenes/VIU-Win.unity"};
         buildPlayerOptions.locationPathName = "G:/TestBuilds/Test1.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows;
         buildPlayerOptions.targetGroup = BuildTargetGroup.Standalone;
