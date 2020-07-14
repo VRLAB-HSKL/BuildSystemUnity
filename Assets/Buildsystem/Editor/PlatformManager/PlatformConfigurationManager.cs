@@ -141,7 +141,10 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 40, 120, 24), "Load"))
         {
-            LoadFromBuildsystemServer();
+            //LoadFromBuildsystemServer();
+            LoadWindow loadWindow =
+                (LoadWindow)EditorWindow.GetWindow(typeof(LoadWindow), true, "Load Platform configuration");
+            loadWindow.Show();
         }
 
         if (GUI.Button(new Rect(392, 70, 120, 24), "Store"))
