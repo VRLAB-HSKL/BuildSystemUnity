@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class LoadWindow : EditorWindow
 {
@@ -9,15 +12,40 @@ public class LoadWindow : EditorWindow
     private string loadConfigId;
     private int index;
     private string[] showLoadedConfigs;
+    private string buildsystemUri = "http://localhost:8080/api/unity/getplatformconfigurationbyid";
+    private List<PlatformData> platformDatas;
+    private bool updateList;
+
 
     private void OnEnable()
     {
-        
+        updateList = false;
+        showLoadedConfigs = new string[10];
+        platformDatas = new List<PlatformData>();
     }
 
     private void OnGUI()
     {
         ShowLoadWindow();
+        UpdateList();
+    }
+
+    private void UpdateList()
+    {
+        if (updateList)
+        {
+            PlatformData[] dataArray = platformDatas.ToArray();
+            string[] configNameArray = new string[platformDatas.Count];
+
+            for (int i = 0; i < platformDatas.Count; i++)
+            {
+                configNameArray[i] = dataArray[i].configurationName;
+            }
+
+            this.showLoadedConfigs = configNameArray;
+
+            this.updateList = false;
+        }
     }
 
     private void ShowLoadWindow()
@@ -37,7 +65,7 @@ public class LoadWindow : EditorWindow
         loadConfigId = EditorGUILayout.TextField("Config. ID:", loadConfigId);
         if (GUI.Button(new Rect(150, 40, 100, 20), "Load"))
         {
-
+            LoadFromBuildsystemServer(loadConfigId);
         }
         GUILayout.EndArea();
 
@@ -58,14 +86,50 @@ public class LoadWindow : EditorWindow
         {
 
         }
+
         GUILayout.EndArea();
 
         GUI.Box(new Rect(0, 210, 320, 40), "");
         GUILayout.BeginArea(new Rect(0, 180, 250, 250));
         if (GUI.Button(new Rect(100, 40, 100, 20), "Close"))
         {
-
+            this.Close();
         }
+
         GUILayout.EndArea();
+    }
+
+    void LoadFromBuildsystemServer(string id)
+    {
+        string url = this.buildsystemUri + "?id=" + id;
+        EditorCoroutineUtility.StartCoroutine(GetFromURL(url), this);
+    }
+
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uri"></param>
+    /// <returns></returns>
+    IEnumerator GetFromURL(string uri)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(uri))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.LogError("Request Error: " + request.error);
+            }
+            else
+            {
+                string jsonString = request.downloadHandler.text;
+                Debug.Log(jsonString);
+                PlatformData data = JsonUtility.FromJson<PlatformData>(jsonString);
+                platformDatas.Add(data);
+                this.updateList = true;
+                //PlatformDataRoot dataRoot = JsonUtility.FromJson<PlatformDataRoot>(jsonString);
+            }
+        }
     }
 }
