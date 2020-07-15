@@ -144,6 +144,7 @@ public class PlatformConfigurationManager : EditorWindow
             //LoadFromBuildsystemServer();
             LoadWindow loadWindow =
                 (LoadWindow)EditorWindow.GetWindow(typeof(LoadWindow), true, "Load Platform configuration");
+            loadWindow.SetDataManager(this.PlatformDataManager);
             loadWindow.Show();
         }
 

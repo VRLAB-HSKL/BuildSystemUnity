@@ -15,7 +15,16 @@ public class LoadWindow : EditorWindow
     private string buildsystemUri = "http://localhost:8080/api/unity/getplatformconfigurationbyid";
     private List<PlatformData> platformDatas;
     private bool updateList;
+    private PlatformDataManager PlatformDataManager;
 
+    /// <summary>
+    /// Setter for <see cref="SceneConfManager"/> SceneConfManager
+    /// </summary>
+    /// <param name="platformDataManager"></param>
+    public void SetDataManager(PlatformDataManager platformDataManager)
+    {
+        this.PlatformDataManager = platformDataManager;
+    }
 
     private void OnEnable()
     {
@@ -79,12 +88,13 @@ public class LoadWindow : EditorWindow
 
         if (GUI.Button(new Rect(50, 40, 100, 20), "Store"))
         {
-
+            StoreLoadedConfigurations();
         }
 
         if (GUI.Button(new Rect(150, 40, 100, 20), "Delete"))
         {
-
+            Debug.Log("Data to Delete: " + showLoadedConfigs[index]);
+            DeleteLoadedData(showLoadedConfigs[index]);
         }
 
         GUILayout.EndArea();
@@ -99,10 +109,27 @@ public class LoadWindow : EditorWindow
         GUILayout.EndArea();
     }
 
+    void StoreLoadedConfigurations()
+    {
+        foreach(PlatformData data in platformDatas)
+        {
+            PlatformDataManager.addPlatformConfiguration(data);
+        }
+    }
+
     void LoadFromBuildsystemServer(string id)
     {
         string url = this.buildsystemUri + "?id=" + id;
         EditorCoroutineUtility.StartCoroutine(GetFromURL(url), this);
+    }
+
+    void DeleteLoadedData(string configName)
+    {
+        PlatformData dataTodelete;
+        dataTodelete = platformDatas.Find(data => data.configurationName == configName);
+        platformDatas.Remove(dataTodelete);
+        
+        updateList = true;
     }
 
     
