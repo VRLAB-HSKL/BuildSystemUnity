@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -65,7 +63,7 @@ public class CreateConfiguration : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    public void init()
+    public void Init()
     {
         this.index = 0;
         this.projectName = PlayerSettings.productName;
@@ -79,7 +77,7 @@ public class CreateConfiguration : EditorWindow
     /// </summary>
     private void OnEnable()
     {
-        init();
+        Init();
         
     }
 
@@ -88,14 +86,14 @@ public class CreateConfiguration : EditorWindow
     /// </summary>
     private void OnGUI()
     {
-        loadActiveScenes();
-        showCreateConfiguration();
+        LoadActiveScenes();
+        ShowCreateConfiguration();
     }
 
     /// <summary>
     /// show the window to create a new platform configuration
     /// </summary>
-    private void showCreateConfiguration()
+    private void ShowCreateConfiguration()
     {
         
         GUILayout.BeginArea(new Rect(0, 0, 250, 250));
@@ -125,8 +123,8 @@ public class CreateConfiguration : EditorWindow
             platformData.description = description;
             platformData.projectName = projectName;
             platformData.sceneName = allScenesPath[index];
-            getBuildTarget(bt);
-            getBuildTargetGroupOption(btg);
+            GetBuildTarget(bt);
+            GetBuildTargetGroupOption(btg);
             platformData.buildTarget = buildTargetName;
             platformData.buildTargetGroup = buildTargetGroupName;
             platformData.viu = assignVIU;
@@ -134,7 +132,7 @@ public class CreateConfiguration : EditorWindow
             platformData.wavevr = assignWaveSDK;
             platformData.middlevr = assignMiddleVR;
             platformData.index = index;
-            PlatformDataManager.addPlatformConfiguration(platformData);
+            PlatformDataManager.AddPlatformConfiguration(platformData);
             this.Close();
         }
 
@@ -148,16 +146,16 @@ public class CreateConfiguration : EditorWindow
     /// <summary>
     /// loads all active scenes in unity project (active means the scenes are enabled in Buildprocess)
     /// </summary>
-    private void loadActiveScenes()
+    private void LoadActiveScenes()
     {
-        this.allScenesPath = this.PlatformDataManager.getScenesPath();
+        this.allScenesPath = this.PlatformDataManager.GetScenesPath();
     }
 
     /// <summary>
     /// set the user input buildtargetgroup
     /// </summary>
     /// <param name="btg"><see cref="BuildTargetGroup"/>buildtargetgroup</param>
-    void getBuildTargetGroupOption(OptionsTargetGroup btg)
+    void GetBuildTargetGroupOption(OptionsTargetGroup btg)
     {
         switch (btg)
         {
@@ -175,7 +173,7 @@ public class CreateConfiguration : EditorWindow
     /// set the user input buildtarget
     /// </summary>
     /// <param name="bt"><see cref="BuildTarget"/>buildtarget</param>
-    void getBuildTarget(OptionsBuildTarget bt)
+    void GetBuildTarget(OptionsBuildTarget bt)
     {
         switch (bt)
         {

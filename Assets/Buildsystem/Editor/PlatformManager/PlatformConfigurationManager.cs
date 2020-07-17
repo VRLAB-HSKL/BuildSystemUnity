@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
-using System.Configuration;
 using System;
 using UnityEngine.Networking;
 using Unity.EditorCoroutines.Editor;
 
+/// <summary>
+/// 
+/// </summary>
 public class PlatformConfigurationManager : EditorWindow
 {
 
@@ -27,14 +28,22 @@ public class PlatformConfigurationManager : EditorWindow
     //
     private bool loadPlatformConfigurationData = true;
 
+    //
     private Build build;
+
+    //
+    private string platformConfigurationURI;
+
+    //
+    private string webAppURI;
+
 
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="platformDataManager"></param>
-    internal void setPlatformDataMangager(PlatformDataManager platformDataManager)
+    internal void SetPlatformDataMangager(PlatformDataManager platformDataManager)
     {
         this.PlatformDataManager = platformDataManager;
     }
@@ -42,10 +51,12 @@ public class PlatformConfigurationManager : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    void init()
+    void Init()
     {
         this.build = new Build();
         this.platFormConfigs = new string[100];
+        this.platformConfigurationURI = "http://localhost:8080/api/unity/platformconfigurationservice";
+        this.webAppURI = "http://localhost:3000/";
     }
 
     /// <summary>
@@ -53,7 +64,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// </summary>
     void OnEnable()
     {
-        init();
+        Init();
     }
 
     /// <summary>
@@ -62,19 +73,19 @@ public class PlatformConfigurationManager : EditorWindow
     void OnGUI()
     {
         ShowPlatformConfigurationManager();
-        this.platFormConfigs = PlatformDataManager.getAllConfigurationNamesAsArray();
-        loadPlatformConfigurationXML();
+        this.platFormConfigs = PlatformDataManager.GetAllConfigurationNamesAsArray();
+        LoadPlatformConfigurationXML();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    void loadPlatformConfigurationXML()
+    void LoadPlatformConfigurationXML()
     {
         if(loadPlatformConfigurationData)
         {
             Debug.Log("File loaded once");
-            PlatformDataManager.loadData();
+            PlatformDataManager.LoadData();
             this.loadPlatformConfigurationData = false;
         }
     }
@@ -112,7 +123,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(5, 95, 55, 24), "Save"))
         {
-            PlatformDataManager.saveData();
+            PlatformDataManager.SaveData();
             this.Close();
         }
 
@@ -161,7 +172,7 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 130, 120, 24), "WebApp"))
         {
-            Application.OpenURL("http://localhost:3000/");
+            Application.OpenURL(webAppURI);
         }
 
         GUI.Box(new Rect(0, 145, 260, 55), "");
@@ -171,22 +182,30 @@ public class PlatformConfigurationManager : EditorWindow
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index"></param>
     void PrepareLoadConfigurationSetup(int index)
     {
 
         PlatformData dataToLoad = new PlatformData();
-        dataToLoad = PlatformDataManager.getPlatformDataFromIndex(index);
+        dataToLoad = PlatformDataManager.GetPlatformDataFromIndex(index);
         Debug.Log(dataToLoad.sceneName);
         LoadScene(dataToLoad.sceneName);
-        prepareBuildSettings(dataToLoad.buildTarget, dataToLoad.buildTargetGroup);
+        PrepareBuildSettings(dataToLoad.buildTarget, dataToLoad.buildTargetGroup);
         this.Close();
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index"></param>
     void DeleteSelectedPlatformConfiguration(int index)
     {
         PlatformData dataToDelete = new PlatformData();
-        dataToDelete = PlatformDataManager.getPlatformDataFromIndex(index);
+        dataToDelete = PlatformDataManager.GetPlatformDataFromIndex(index);
         Debug.Log("i: " + index + " => " + "File: " + dataToDelete.configurationName);
         PlatformDataManager.DeleteSelectedPlatformDataByData(dataToDelete);
     }
@@ -206,7 +225,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// </summary>
     /// <param name="buildTarget">unity buildtarget</param>
     /// <param name="buildTargetGroup">unity buildtargetgroup</param>
-    void prepareBuildSettings(string buildTarget, string buildTargetGroup)
+    void PrepareBuildSettings(string buildTarget, string buildTargetGroup)
     {
         
 
@@ -226,7 +245,7 @@ public class PlatformConfigurationManager : EditorWindow
     {
 
         PlatformData dataToSend = new PlatformData();
-        dataToSend = PlatformDataManager.getPlatformDataFromIndex(index);
+        dataToSend = PlatformDataManager.GetPlatformDataFromIndex(index);
         String jsonString = JsonUtility.ToJson(dataToSend);
         Debug.Log(jsonString);
         EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
@@ -247,24 +266,6 @@ public class PlatformConfigurationManager : EditorWindow
         
     }
 
-    void LoadFromBuildsystemServer()
-    {
-        //EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getallplatformconfigurationservice"), this);
-        EditorCoroutineUtility.StartCoroutine(GetFromURL("http://localhost:8080/api/unity/getplatformconfigurationbyid?id=1"), this);
-    }
-
-    /// <summary>
-    /// This method loads the selected assets
-    /// </summary>
-    /// <param name="viu">viu asset</param>
-    /// <param name="gvr">gvr asset</param>
-    /// <param name="wave">wave asset</param>
-    void prepareAssets(bool viu, bool gvr, bool wave)
-    {
-        
-
-    }
-
     /// <summary>
     /// this method sends the project information to the webserver
     /// </summary>
@@ -272,7 +273,7 @@ public class PlatformConfigurationManager : EditorWindow
     /// <returns></returns>
     IEnumerator Upload(String jsonString)
     {
-        using (UnityWebRequest www = UnityWebRequest.Put("http://localhost:8080/api/unity/platformconfigurationservice", jsonString))
+        using (UnityWebRequest www = UnityWebRequest.Put(platformConfigurationURI, jsonString))
         {
             www.method = UnityWebRequest.kHttpVerbPOST;
             www.SetRequestHeader("Content-Type", "application/json");
@@ -286,32 +287,6 @@ public class PlatformConfigurationManager : EditorWindow
             else
             {
                 Debug.Log("Form upload complete!");
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="uri"></param>
-    /// <returns></returns>
-    IEnumerator GetFromURL(String uri)
-    {
-       using (UnityWebRequest request = UnityWebRequest.Get(uri))
-        {
-            yield return request.SendWebRequest();
-
-            if(request.isNetworkError || request.isHttpError)
-            {
-                Debug.LogError("Request Error: " + request.error);
-            } else
-            {
-                string jsonString = request.downloadHandler.text;
-                Debug.Log(jsonString);
-                PlatformData data = JsonUtility.FromJson<PlatformData>(jsonString);
-                Debug.Log(data.configurationName);
-
-                //PlatformDataRoot dataRoot = JsonUtility.FromJson<PlatformDataRoot>(jsonString);
             }
         }
     }

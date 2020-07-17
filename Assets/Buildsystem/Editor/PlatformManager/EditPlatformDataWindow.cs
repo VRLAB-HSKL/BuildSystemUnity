@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class EditPlatformDataWindow : EditorWindow
 {
-
+    // flag to update the data to edit
     bool updateOnce = false;
 
     //Enum: provides BuildTarget options
@@ -30,7 +27,7 @@ public class EditPlatformDataWindow : EditorWindow
     //bool middleVR
     bool assignMiddleVR = false;
 
-    //
+    //index
     int storedIndex;
 
     //buildtargetgroup name 
@@ -39,31 +36,32 @@ public class EditPlatformDataWindow : EditorWindow
     //buildtarget name
     private string buildTargetName;
 
-    //
+    //project name
     private string projectName;
 
-    //
+    //description
     private string description;
 
-    //
+    //index
     private int index;
 
-    //
+    //scene name
     private string sceneName;
 
-    //
+    //contains the names from all scenes
     private string[] allScenesPath;
+
+    //configuration name
+    private string configName;
+
+    //platform configuration
+    private PlatformData platformData;
 
     /// <summary>
     /// <see cref="PlatformDataManager"/> SceneConfManager
     /// </summary>
     PlatformDataManager PlatformDataManager;
-
-    private string configName;
-
-    private PlatformData platformData;
-
-
+        
     /// <summary>
     /// Setter for <see cref="PlatformDataManager"/> PlatformDataManager
     /// </summary>
@@ -95,12 +93,12 @@ public class EditPlatformDataWindow : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    public void init()
+    public void UpdateDataToEdit()
     {
         if(!updateOnce)
         {
             this.platformData = new PlatformData();
-            this.platformData = PlatformDataManager.getPlatformDataFromIndex(this.index);
+            this.platformData = PlatformDataManager.GetPlatformDataFromIndex(this.index);
             this.projectName = platformData.projectName;
             this.description = platformData.description;
             this.configName = platformData.configurationName;
@@ -148,15 +146,15 @@ public class EditPlatformDataWindow : EditorWindow
     /// </summary>
     private void OnGUI()
     {
-        init();
-        loadActiveScenes();
-        showCreateConfiguration();
+        UpdateDataToEdit();
+        LoadActiveScenes();
+        ShowCreateConfiguration();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private void showCreateConfiguration()
+    private void ShowCreateConfiguration()
     {
 
         GUILayout.BeginArea(new Rect(0, 0, 250, 250));
@@ -187,17 +185,15 @@ public class EditPlatformDataWindow : EditorWindow
             platformData.description = description;
             platformData.projectName = projectName;
             platformData.sceneName = allScenesPath[index];
-            getBuildTarget(bt);
-            getBuildTargetGroupOption(btg);
+            GetBuildTarget(bt);
+            GetBuildTargetGroupOption(btg);
             platformData.buildTarget = buildTargetName;
             platformData.buildTargetGroup = buildTargetGroupName;
             platformData.viu = assignVIU;
             platformData.gvr = assignGvR;
             platformData.wavevr = assignWaveSDK;
             platformData.middlevr = assignMiddleVR;
-            //PlatformDataManager.updatePlatformDataByIndex(storedIndex, platformData);
-            //PlatformDataManager.updatePlatformDataByData(platformData.configurationName, platformData);
-            PlatformDataManager.updatePlatformData(platformData);
+            PlatformDataManager.UpdatePlatformData(platformData);
             this.Close();
         }
 
@@ -211,16 +207,16 @@ public class EditPlatformDataWindow : EditorWindow
     /// <summary>
     /// 
     /// </summary>
-    private void loadActiveScenes()
+    private void LoadActiveScenes()
     {
-        this.allScenesPath = this.PlatformDataManager.getScenesPath();
+        this.allScenesPath = this.PlatformDataManager.GetScenesPath();
     }
 
     /// <summary>
     /// set the user input buildtargetgroup
     /// </summary>
     /// <param name="btg"><see cref="BuildTargetGroup"/>buildtargetgroup</param>
-    void getBuildTargetGroupOption(OptionsTargetGroup btg)
+    void GetBuildTargetGroupOption(OptionsTargetGroup btg)
     {
         switch (btg)
         {
@@ -238,7 +234,7 @@ public class EditPlatformDataWindow : EditorWindow
     /// set the user input buildtarget
     /// </summary>
     /// <param name="bt"><see cref="BuildTarget"/>buildtarget</param>
-    void getBuildTarget(OptionsBuildTarget bt)
+    void GetBuildTarget(OptionsBuildTarget bt)
     {
         switch (bt)
         {

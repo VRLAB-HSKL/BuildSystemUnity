@@ -1,7 +1,6 @@
 ﻿using System.Xml.Serialization;
 
 
-
 [System.Serializable]
 public class PlatformDataArray
 {

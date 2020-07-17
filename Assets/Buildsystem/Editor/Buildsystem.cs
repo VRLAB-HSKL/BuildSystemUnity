@@ -93,7 +93,7 @@ public class Buildsystem : MonoBehaviour
         PlatformConfigurationManager platformConfigurationManager =
             (PlatformConfigurationManager)EditorWindow.GetWindow(typeof(PlatformConfigurationManager), true,
             "Platform Manager");
-        platformConfigurationManager.setPlatformDataMangager(platformDataManager);
+        platformConfigurationManager.SetPlatformDataMangager(platformDataManager);
         platformConfigurationManager.Show();
     }
 

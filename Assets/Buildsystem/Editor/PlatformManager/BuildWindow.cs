@@ -65,7 +65,7 @@ public class BuildWindow : EditorWindow
     /// </summary>
     void OnEnable()
     {
-        init();
+        Init();
     }
 
     /// <summary>
@@ -73,14 +73,14 @@ public class BuildWindow : EditorWindow
     /// </summary>
     void OnGUI()
     {
-        loadActiveScenes();
+        LoadActiveScenes();
         ShowBuildWindow();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    void init()
+    void Init()
     {
         this.destinationFile = "";
         this.sceneEnding = ".unity";
@@ -104,9 +104,9 @@ public class BuildWindow : EditorWindow
     /// <summary>
     /// loads all active scenes in unity project (active means the scenes are enabled in Buildprocess)
     /// </summary>
-    private void loadActiveScenes()
+    private void LoadActiveScenes()
     {
-        this.allScenesPath = this.PlatformDataManager.getScenesPath();
+        this.allScenesPath = this.PlatformDataManager.GetScenesPath();
     }
 
     /// <summary>
@@ -139,8 +139,8 @@ public class BuildWindow : EditorWindow
         GUILayout.BeginArea(new Rect(0, 130, 250, 250));
         bt = (OptionsBuildTarget)EditorGUILayout.EnumPopup("BuildTarget :", bt);
         btg = (OptionsTargetGroup)EditorGUILayout.EnumPopup("Platform :", btg);
-        getBuildTarget(bt);
-        getBuildTargetGroupOption(btg);
+        GetBuildTarget(bt);
+        GetBuildTargetGroupOption(btg);
         GUILayout.EndArea();
         
         GUI.Box(new Rect(0,180,290,55), "USB-Build for Android");
@@ -158,7 +158,7 @@ public class BuildWindow : EditorWindow
             if (buildProcess == "Windows")
             {
                 this.destinationFile = folderPath + "/" + appName + ".exe";
-                startWindowsBuild(fullScenePath, destinationFile);
+                StartWindowsBuild(fullScenePath, destinationFile);
             }
 
             if (buildProcess == "Android")
@@ -168,10 +168,10 @@ public class BuildWindow : EditorWindow
 
                 if (usbAndroid)
                 {
-                    startAndroidAutoBuild(fullScenePath, destinationFile);
+                    StartAndroidAutoBuild(fullScenePath, destinationFile);
                 } else {
                     
-                    startAndroidBuild(fullScenePath, destinationFile);
+                    StartAndroidBuild(fullScenePath, destinationFile);
                 }
                 
             }
@@ -188,7 +188,7 @@ public class BuildWindow : EditorWindow
     /// </summary>
     /// <param name="fullScenePath"></param>
     /// <param name="destinationFile"></param>
-    void startAndroidBuild(string fullScenePath, string destinationFile)
+    void StartAndroidBuild(string fullScenePath, string destinationFile)
     {
         string[] scenesPath = new[] { fullScenePath };
         BuildPipeline.BuildPlayer(scenesPath, destinationFile, BuildTarget.Android, BuildOptions.None);
@@ -199,7 +199,7 @@ public class BuildWindow : EditorWindow
     /// </summary>
     /// <param name="fullScenePath"></param>
     /// <param name="destinationFile"></param>
-    void startAndroidAutoBuild(string fullScenePath, string destinationFile)
+    void StartAndroidAutoBuild(string fullScenePath, string destinationFile)
     {
         string[] scenesPath = new[] { fullScenePath };
         BuildPipeline.BuildPlayer(scenesPath, destinationFile, BuildTarget.Android, BuildOptions.AutoRunPlayer);
@@ -210,7 +210,7 @@ public class BuildWindow : EditorWindow
     /// </summary>
     /// <param name="fullScenePath"></param>
     /// <param name="destinationFile"></param>
-    void startWindowsBuild(string fullScenePath, string destinationFile)
+    void StartWindowsBuild(string fullScenePath, string destinationFile)
     {
         
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
@@ -238,7 +238,7 @@ public class BuildWindow : EditorWindow
     /// set the user input buildtargetgroup
     /// </summary>
     /// <param name="btg"><see cref="BuildTargetGroup"/>buildtargetgroup</param>
-    void getBuildTargetGroupOption(OptionsTargetGroup btg)
+    void GetBuildTargetGroupOption(OptionsTargetGroup btg)
     {
         switch (btg)
         {
@@ -256,7 +256,7 @@ public class BuildWindow : EditorWindow
     /// set the user input buildtarget
     /// </summary>
     /// <param name="bt"><see cref="BuildTarget"/>buildtarget</param>
-    void getBuildTarget(OptionsBuildTarget bt)
+    void GetBuildTarget(OptionsBuildTarget bt)
     {
         switch (bt)
         {

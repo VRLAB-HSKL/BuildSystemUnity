@@ -111,9 +111,9 @@ public class LoadWindow : EditorWindow
 
     void StoreLoadedConfigurations()
     {
-        foreach(PlatformData data in platformDatas)
+        foreach (PlatformData data in platformDatas)
         {
-            PlatformDataManager.addPlatformConfiguration(data);
+            PlatformDataManager.AddPlatformConfiguration(data);
         }
     }
 
@@ -128,11 +128,10 @@ public class LoadWindow : EditorWindow
         PlatformData dataTodelete;
         dataTodelete = platformDatas.Find(data => data.configurationName == configName);
         platformDatas.Remove(dataTodelete);
-        
+
         updateList = true;
     }
 
-    
     /// <summary>
     /// 
     /// </summary>
