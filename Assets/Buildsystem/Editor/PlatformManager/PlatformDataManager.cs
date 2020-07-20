@@ -5,7 +5,10 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// This class manages the data required by the plugin.
+/// All classes that need data have an instance of this class to manage the data. In addition,
+/// the class is responsible for saving the current data locally
+/// and making it available to the user the next time it is started.
 /// </summary>
 public class PlatformDataManager 
 {

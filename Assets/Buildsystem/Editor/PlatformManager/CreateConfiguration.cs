@@ -61,19 +61,17 @@ public class CreateConfiguration : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// initialization of the variable
     /// </summary>
     public void Init()
     {
         this.index = 0;
         this.projectName = PlayerSettings.productName;
         this.description = "";
-       
-        
     }
 
     /// <summary>
-    /// 
+    /// this method called once 
     /// </summary>
     private void OnEnable()
     {
@@ -82,7 +80,7 @@ public class CreateConfiguration : EditorWindow
     }
 
     /// <summary>
-    /// loads 
+    /// similar to the update method 
     /// </summary>
     private void OnGUI()
     {

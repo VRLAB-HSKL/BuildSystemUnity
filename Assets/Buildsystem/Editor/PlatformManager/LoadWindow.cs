@@ -6,16 +6,36 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// This class provide a user interactions to get platform configurations from the Buildsystem.
+/// </summary>
 public class LoadWindow : EditorWindow
 {
-
+    //This ID ensures that the correct data is loaded from the MongoDB
     private string loadConfigId;
+    
+    //index for the popup window
     private int index;
+
+    //this string[] shows the user the already loaded configuration names
     private string[] showLoadedConfigs;
+    
+    //URI to the Buildsystem REST interface
     private string buildsystemUri = "http://localhost:8080/api/unity/getplatformconfigurationbyid";
+
+    //This list contains all loaded platform configurations.
     private List<PlatformData> platformDatas;
+
+    //this boolean changes its value every time a new configuration is loaded to update the data sets
     private bool updateList;
+
+    /// <summary>
+    /// <see cref="PlatformDataManager"/> SceneConfManager
+    /// </summary>
     private PlatformDataManager PlatformDataManager;
+
+    //URI to the website
+    private string unityConfigsURI = "http://localhost:3000/unityconfigs";
 
     /// <summary>
     /// Setter for <see cref="SceneConfManager"/> SceneConfManager
@@ -26,6 +46,9 @@ public class LoadWindow : EditorWindow
         this.PlatformDataManager = platformDataManager;
     }
 
+    /// <summary>
+    /// this method called once 
+    /// </summary>
     private void OnEnable()
     {
         updateList = false;
@@ -33,12 +56,18 @@ public class LoadWindow : EditorWindow
         platformDatas = new List<PlatformData>();
     }
 
+    /// <summary>
+    /// similar to the update method
+    /// </summary>
     private void OnGUI()
     {
         ShowLoadWindow();
         UpdateList();
     }
 
+    /// <summary>
+    /// update the loaded configuration list if data changed
+    /// </summary>
     private void UpdateList()
     {
         if (updateList)
@@ -57,6 +86,9 @@ public class LoadWindow : EditorWindow
         }
     }
 
+    /// <summary>
+    /// this method is provided by the user interface
+    /// </summary>
     private void ShowLoadWindow()
     {
         GUI.Box(new Rect(0, 0, 320, 45), "");
@@ -64,7 +96,7 @@ public class LoadWindow : EditorWindow
         GUILayout.Label("Choose Configurations:");
         if (GUI.Button(new Rect(150, 0, 100, 20), "Open WebApp"))
         {
-            Application.OpenURL("http://localhost:3000/unityconfigs");
+            Application.OpenURL(unityConfigsURI);
         }
         GUILayout.EndArea();
 
@@ -109,6 +141,10 @@ public class LoadWindow : EditorWindow
         GUILayout.EndArea();
     }
 
+    /// <summary>
+    /// this method transfers the loaded configurations to the data manager
+    /// in order to further manage them and make them available locally
+    /// </summary>
     void StoreLoadedConfigurations()
     {
         foreach (PlatformData data in platformDatas)
@@ -117,12 +153,19 @@ public class LoadWindow : EditorWindow
         }
     }
 
+    /// <summary>
+    /// This method assembles the URI to load the selected data after that the method to be executed is called
+    /// <param name="id"> MondoDB data id</param>
     void LoadFromBuildsystemServer(string id)
     {
         string url = this.buildsystemUri + "?id=" + id;
         EditorCoroutineUtility.StartCoroutine(GetFromURL(url), this);
     }
 
+    /// <summary>
+    /// this method allows users to delete unnecessary data
+    /// </summary>
+    /// <param name="configName"> platform configuration name to delete</param>
     void DeleteLoadedData(string configName)
     {
         PlatformData dataTodelete;
@@ -133,10 +176,9 @@ public class LoadWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// this method loads the data and adds it to the List <see cref="platformDatas"/>
     /// </summary>
-    /// <param name="uri"></param>
-    /// <returns></returns>
+    /// <param name="uri">the correctly composed uri</param>
     IEnumerator GetFromURL(string uri)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(uri))
@@ -154,7 +196,6 @@ public class LoadWindow : EditorWindow
                 PlatformData data = JsonUtility.FromJson<PlatformData>(jsonString);
                 platformDatas.Add(data);
                 this.updateList = true;
-                //PlatformDataRoot dataRoot = JsonUtility.FromJson<PlatformDataRoot>(jsonString);
             }
         }
     }

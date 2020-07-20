@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+
+
 /// <summary>
-/// 
+/// This class provides a build process. It allows the user to start a direct build based on his configuration
 /// </summary>
 public class BuildWindow : EditorWindow
 {
@@ -15,37 +17,37 @@ public class BuildWindow : EditorWindow
     //Enum: provied BuildTargetGroup options
     public OptionsTargetGroup btg;
     
-    //
+    //buildtarget android
     private BuildTarget btAndroid;
     
-    //
+    //buildtarget windows
     private BuildTarget btWindows;
 
-    //
+    //buildtarget group android
     private BuildTargetGroup btgAndroid;
 
-    //
+    //buildtarget group windows
     private BuildTargetGroup btgWindows;
 
-    //
+    //switch between windows or android
     private string buildProcess;
 
-    //
+    //folder path
     private string folderPath;
 
-    //
+    //Application name
     private string appName;
 
-    //
+    //path to scene
     private string scenePath;
 
-    //
+    //scene ending ".unity"
     private string sceneEnding;
 
-    //
+    //full path to destionation
     private string destinationFile;
 
-    //
+    //bool to switch between the default- or direct to device build
     private bool usbAndroid;
 
     /// <summary>
@@ -61,7 +63,7 @@ public class BuildWindow : EditorWindow
 
 
     /// <summary>
-    /// 
+    /// this method called once 
     /// </summary>
     void OnEnable()
     {
@@ -69,7 +71,7 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// similar to the update method
     /// </summary>
     void OnGUI()
     {
@@ -78,7 +80,7 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// initialization of the variable
     /// </summary>
     void Init()
     {
@@ -110,7 +112,7 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    ///This method provides the userinterace 
     /// </summary>
     void ShowBuildWindow()
     {
@@ -184,10 +186,10 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method starts the Android build and assembles the variables specified in the user interface
     /// </summary>
-    /// <param name="fullScenePath"></param>
-    /// <param name="destinationFile"></param>
+    /// <param name="fullScenePath"> path to the choosen scene </param>
+    /// <param name="destinationFile"> path to build destination </param>
     void StartAndroidBuild(string fullScenePath, string destinationFile)
     {
         string[] scenesPath = new[] { fullScenePath };
@@ -195,10 +197,11 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method starts the Android build and assembles the variables specified in the user interface.
+    /// The special thing about this build is that it is deployed directly on a connected device.
     /// </summary>
-    /// <param name="fullScenePath"></param>
-    /// <param name="destinationFile"></param>
+    /// <param name="fullScenePath"> path to the choosen scene </param>
+    /// <param name="destinationFile">path to build destination </param>
     void StartAndroidAutoBuild(string fullScenePath, string destinationFile)
     {
         string[] scenesPath = new[] { fullScenePath };
@@ -206,10 +209,10 @@ public class BuildWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method starts the Windows build and assembles the variables specified in the user interface
     /// </summary>
-    /// <param name="fullScenePath"></param>
-    /// <param name="destinationFile"></param>
+    /// <param name="fullScenePath"> path to the choosen scene </param>
+    /// <param name="destinationFile"> path to build destination </param>
     void StartWindowsBuild(string fullScenePath, string destinationFile)
     {
         

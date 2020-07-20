@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// 
+/// This class allows users to edit existing or newly created project configurations.
 /// </summary>
 public class EditPlatformDataWindow : EditorWindow
 {
@@ -27,7 +27,7 @@ public class EditPlatformDataWindow : EditorWindow
     //bool middleVR
     bool assignMiddleVR = false;
 
-    //index
+    //index from main window
     int storedIndex;
 
     //buildtargetgroup name 
@@ -42,7 +42,7 @@ public class EditPlatformDataWindow : EditorWindow
     //description
     private string description;
 
-    //index
+    //index for new popup
     private int index;
 
     //scene name
@@ -72,7 +72,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// Setter for platform Data to edit
     /// </summary>
     /// <param name="platformData"></param>
     public void SetPlatformDataToEdit(PlatformData platformData)
@@ -81,7 +81,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// Setter for the index
     /// </summary>
     /// <param name="index"></param>
     public void SetIndex(int index)
@@ -91,7 +91,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// A copy of the passed platform configuration
     /// </summary>
     public void UpdateDataToEdit()
     {
@@ -133,7 +133,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// this method called once 
     /// </summary>
     private void OnEnable()
     {
@@ -142,7 +142,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// similar to the update method
     /// </summary>
     private void OnGUI()
     {
@@ -152,7 +152,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// this method is provided by the user interface
     /// </summary>
     private void ShowCreateConfiguration()
     {
@@ -205,7 +205,7 @@ public class EditPlatformDataWindow : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// load active scene names in a string []
     /// </summary>
     private void LoadActiveScenes()
     {

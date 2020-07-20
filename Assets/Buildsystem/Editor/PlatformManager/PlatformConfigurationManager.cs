@@ -8,39 +8,38 @@ using UnityEngine.Networking;
 using Unity.EditorCoroutines.Editor;
 
 /// <summary>
-/// 
+/// This class is the main interface of the build system plugin.
+/// It enables the user to create / delete / edit specific platform configurations.
+/// Furthermore, the user can start specific builds,
+/// which can then be started on the Windows Platform or Android devices.
+/// The user can also synchronize newly created and existing platform configurations
+/// with the backend system and load configurations from there.
 /// </summary>
 public class PlatformConfigurationManager : EditorWindow
 {
-
-    //
+    //index for the popup window
     private int index;
 
-    //
-    private List<PlatformData> platformDatas;
-
-    //
+    //contains all platform configuration names
     private string[] platFormConfigs;
 
-    //
+    /// <summary>
+    /// <see cref="PlatformDataManager"/> SceneConfManager
+    /// </summary>
     private PlatformDataManager PlatformDataManager;
 
-    //
+    //bool for load all localy stored platform configurations once
     private bool loadPlatformConfigurationData = true;
 
-    //
-    private Build build;
-
-    //
+    
+    //URI to the REST-Interface to push created or stored platform configurations
     private string platformConfigurationURI;
 
-    //
+    //URI to Web interface
     private string webAppURI;
 
-
-
     /// <summary>
-    /// 
+    /// Setter for <see cref="SceneConfManager"/> SceneConfManager
     /// </summary>
     /// <param name="platformDataManager"></param>
     internal void SetPlatformDataMangager(PlatformDataManager platformDataManager)
@@ -49,18 +48,17 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// initialization of the variable
     /// </summary>
     void Init()
     {
-        this.build = new Build();
         this.platFormConfigs = new string[100];
         this.platformConfigurationURI = "http://localhost:8080/api/unity/platformconfigurationservice";
         this.webAppURI = "http://localhost:3000/";
     }
 
     /// <summary>
-    /// 
+    /// this method called once 
     /// </summary>
     void OnEnable()
     {
@@ -68,7 +66,7 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// similar to the update method
     /// </summary>
     void OnGUI()
     {
@@ -78,7 +76,9 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method loads the existing configurations from the XML at startup.
+    /// If there is no XML, configurations must first be created.
+    /// The next time you start it will be loaded automatically
     /// </summary>
     void LoadPlatformConfigurationXML()
     {
@@ -91,7 +91,7 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method shows the main interface of the build system plugin
     /// </summary>
     void ShowPlatformConfigurationManager()
     {
@@ -116,7 +116,6 @@ public class PlatformConfigurationManager : EditorWindow
             (EditPlatformDataWindow)EditorWindow.GetWindow(typeof(EditPlatformDataWindow), true,
             "Edit Configuration");
             editConfigurationWindow.SetDataManager(this.PlatformDataManager);
-            //editConfigurationWindow.SetPlatformDataToEdit(this.PlatformDataManager.getPlatformDataFromIndex(this.index));
             editConfigurationWindow.SetIndex(index);
             editConfigurationWindow.Show();
         }
@@ -152,7 +151,6 @@ public class PlatformConfigurationManager : EditorWindow
 
         if (GUI.Button(new Rect(392, 40, 120, 24), "Load"))
         {
-            //LoadFromBuildsystemServer();
             LoadWindow loadWindow =
                 (LoadWindow)EditorWindow.GetWindow(typeof(LoadWindow), true, "Load Platform configuration");
             loadWindow.SetDataManager(this.PlatformDataManager);
@@ -183,12 +181,11 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method switches the build settings and the scene based on the selected configuration
     /// </summary>
     /// <param name="index"></param>
     void PrepareLoadConfigurationSetup(int index)
     {
-
         PlatformData dataToLoad = new PlatformData();
         dataToLoad = PlatformDataManager.GetPlatformDataFromIndex(index);
         Debug.Log(dataToLoad.sceneName);
@@ -199,7 +196,7 @@ public class PlatformConfigurationManager : EditorWindow
     }
 
     /// <summary>
-    /// 
+    /// This method deleted a specific platform configuration
     /// </summary>
     /// <param name="index"></param>
     void DeleteSelectedPlatformConfiguration(int index)
@@ -227,8 +224,6 @@ public class PlatformConfigurationManager : EditorWindow
     /// <param name="buildTargetGroup">unity buildtargetgroup</param>
     void PrepareBuildSettings(string buildTarget, string buildTargetGroup)
     {
-        
-
         if (buildTarget == "Android" && buildTargetGroup == "Android")
         {
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
@@ -240,18 +235,21 @@ public class PlatformConfigurationManager : EditorWindow
         }
     }
 
-
+    /// <summary>
+    /// This method sends the selected platform configuration to the build system server
+    /// </summary>
     void StoreSelectedToBuildsystemServer()
     {
-
         PlatformData dataToSend = new PlatformData();
         dataToSend = PlatformDataManager.GetPlatformDataFromIndex(index);
         String jsonString = JsonUtility.ToJson(dataToSend);
         Debug.Log(jsonString);
         EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
-        //PlatformDataManager.PlatformDataList
     }
 
+    /// <summary>
+    /// This method sends all platform configuration which are currently in the system to the build system server
+    /// </summary>
     void StoreToBuildsystemServer()
     {
         List<PlatformData> datalist = PlatformDataManager.PlatformDataList.platformDatas;
@@ -261,9 +259,7 @@ public class PlatformConfigurationManager : EditorWindow
             String jsonString = JsonUtility.ToJson(data);
             Debug.Log(jsonString);
             EditorCoroutineUtility.StartCoroutine(Upload(jsonString), this);
-        }
-
-        
+        }        
     }
 
     /// <summary>
