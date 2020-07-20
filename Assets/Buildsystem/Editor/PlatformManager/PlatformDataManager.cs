@@ -5,6 +5,25 @@ using UnityEditor;
 using UnityEngine;
 
 /// <summary>
+/// enum with BuildTargetGroup Options
+/// </summary>
+public enum OptionsTargetGroup
+{
+    Standalone,
+    Android,
+}
+
+/// <summary>
+/// enum with BuildTarget options
+/// </summary>
+public enum OptionsBuildTarget
+{
+    StandaloneWindows64,
+    Android,
+}
+
+
+/// <summary>
 /// This class manages the data required by the plugin.
 /// All classes that need data have an instance of this class to manage the data. In addition,
 /// the class is responsible for saving the current data locally
