@@ -21,7 +21,7 @@ public class Buildsystem : MonoBehaviour
     /// <summary>
     /// shows new platform configuration
     /// </summary>
-    [MenuItem("Buildsystem/Platform/Platform Configuration")]
+    [MenuItem("Buildsystem/Platform/Platform Manager")]
     static void ShowPlatformConfigurationManager()
     {
         PlatformConfigurationManager platformConfigurationManager =

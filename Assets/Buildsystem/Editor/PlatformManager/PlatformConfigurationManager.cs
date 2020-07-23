@@ -131,7 +131,7 @@ public class PlatformConfigurationManager : EditorWindow
             DeleteSelectedPlatformConfiguration(index);
         }
 
-        GUI.Box(new Rect(265, 0, 120, 200), "Load Configurations: ");
+        GUI.Box(new Rect(265, 0, 120, 200), "Load / Build Configurations: ");
 
         if (GUI.Button(new Rect(267, 65, 115, 24), "Open Selected"))
         {
